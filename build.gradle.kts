@@ -17,7 +17,6 @@ java {
 repositories {
     mavenCentral()
 }
-
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -28,6 +27,8 @@ dependencies {
     developmentOnly("org.springframework.boot:spring-boot-docker-compose")
     runtimeOnly("org.postgresql:postgresql")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    implementation("org.jetbrains.exposed:exposed-spring-boot-starter:0.50.0")
+    implementation("org.jetbrains.exposed:exposed-kotlin-datetime:0.50.0")
 }
 
 tasks.withType<KotlinCompile> {
