@@ -1,50 +1,67 @@
 package com.ztpai2024.cocktailoo
 
+
+
 import com.ztpai2024.cocktailoo.entities.*
-import org.jetbrains.exposed.dao.id.IntIdTable
-import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.spring.autoconfigure.ExposedAutoConfiguration
 import org.jetbrains.exposed.sql.SchemaUtils
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
-import org.springframework.boot.ApplicationArguments
-import org.springframework.boot.ApplicationRunner
+import org.springframework.boot.CommandLineRunner
+import org.springframework.boot.autoconfigure.ImportAutoConfiguration
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration
 import org.springframework.boot.runApplication
-import org.springframework.stereotype.Component
-import org.springframework.transaction.annotation.Transactional
+import org.springframework.context.annotation.Bean
 
 @SpringBootApplication
-class CocktailooApplication
+class CocktailooApplication{
+    @Bean
+    fun init() = CommandLineRunner {
+        transaction {
+            SchemaUtils.createMissingTablesAndColumns(
+
+                Cocktails,
+                CocktailsIngredients,
+                CocktailsTags,
+                Ingredients,
+                Tags,
+                Users,
+                UsersDetails
+            )
+
+            commit()
+        }
+    }
+}
 
 fun main(args: Array<String>) {
 
 
-    val db = Database.connect(
-        "jdbc:postgresql://localhost:5432/postgres",
-        user = "postgres",
-        password = "admin")
-    transaction {
-//        val saintPetersburgId = meow.insert {
-//            it[name] = "St. Petersburg"
-//
+//    val db = Database.connect(
+//        "jdbc:postgresql://localhost:5432/postgres",
+//        user = "postgres",
+//        password = "admin",
+//        driver = "org.postgresql.Driver")
+
+
+
+
+
+
+    runApplication<CocktailooApplication>(*args)
+
+
+//    transaction{
+//        val details = UserDetails.new { userName = "Jan"
+//            userSurname = "II"}
+//        User.new {
+//            userEmail = "jakabaka@papiesz"
+//            userPassword = "szakszuka"
+//            //userDetails = details
 //        }
-        SchemaUtils.create(
-            Cocktails,
-            CocktailsIngredients,
-            CocktailsTags,
-            Ingredients,
-            Tags,
-            Users,
-            UsersDetails)
-        commit()
-    }
-
-    //runApplication<CocktailooApplication>(*args)
+//    }
 }
 
-object meow : IntIdTable("meow") {
-    val name = varchar("meow",32)
-}
+
 
 

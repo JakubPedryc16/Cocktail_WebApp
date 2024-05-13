@@ -10,5 +10,4 @@ class UserDetails(id: EntityID<Int>) : IntEntity(id) {
     var userName by UsersDetails.userName
     var userSurname by UsersDetails.userSurname
 
-    val user by User referrersOn Users.userDetailsId
 }
