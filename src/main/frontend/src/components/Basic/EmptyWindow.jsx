@@ -7,10 +7,16 @@ const EmptyWindow = styled.div`
     align-items: center;
 
     width: 500px;
-    height: 500px;
+    height: 600px;
     padding: 20px;
     background-color: rgb(0, 130, 120);
     border-radius: 10px;
+    
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    font-weight: normal;
+    color: red;
+    font-size: 15px;
 `;
 
 const EmptyWindowComponent = ({ children }) => {

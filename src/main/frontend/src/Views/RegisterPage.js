@@ -1,5 +1,5 @@
 import React from 'react';
-import RegistrationForm from '../components/RegistrationForm';
+import RegistrationForm from '../components/Complex/RegistrationForm';
 import styled from 'styled-components';
 import Logo from '../logo.png';
 

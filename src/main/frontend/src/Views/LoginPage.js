@@ -1,5 +1,5 @@
     import React from 'react';
-    import LoginForm from '../components/LoginForm';
+    import LoginForm from '../components/Complex/LoginForm';
     import styled from 'styled-components';
     import Logo from '../logo.png';
 

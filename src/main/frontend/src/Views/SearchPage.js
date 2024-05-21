@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import SearchBar from '../components/SearchBar';
-import Cocktail from '../components/Cocktail';
-import Navbar from "../components/Navbar";
+import SearchBar from '../components/Basic/SearchBar';
+import Cocktail from '../components/Complex/Cocktail';
+import Navbar from "../components/Complex/Navbar";
 
 const SearchPageContainer = styled.div`
     display: flex;
