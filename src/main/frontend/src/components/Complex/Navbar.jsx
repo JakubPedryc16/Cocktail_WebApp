@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import MyButton from "../Basic/MyButton";
-import { goToHome, goToSearch, goToAboutMe } from '../../navigation/GoToNav'
+import { goToHome, goToSearch, goToProfile } from '../../navigation/GoToNav'
 
 const handleLogout = () => {
     console.log("Logging out");
@@ -13,10 +13,10 @@ function Navbar() {
         <NavbarContainer>
             <Logo>Cocktailoo</Logo>
                 <NavButtons>
-                    <MyButton onClick={goToHome}>Home</MyButton>
-                    <MyButton onClick={goToSearch}>Cocktails</MyButton>
-                    <MyButton onClick={goToAboutMe}>>About Cocktailoo</MyButton>
-                    <MyButton onClick={handleLogout}>Logout</MyButton>
+                    <NavButton onClick={goToHome}>Home</NavButton>
+                    <NavButton onClick={goToSearch}>Cocktails</NavButton>
+                    <NavButton onClick={goToProfile}>Profile</NavButton>
+                    <NavButton onClick={handleLogout}>Logout</NavButton>
                 </NavButtons>
         </NavbarContainer>
     );
@@ -41,7 +41,27 @@ const NavButtons = styled.a`
     text-decoration: none;
     color: white;
     cursor: pointer;
-    width: 10vw;
+    width: 30vw;
+`;
+
+const NavButton = styled.div`
+
+    margin-left: 20px;
+    color: white;
+    display: block;
+    text-align: center;
+    width: 6vw;
+    height: 3vh;
+    font-size: 16px;
+    background-color: rgb(36, 35, 51);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    align-content: center;
+
+    &:hover {
+        background-color: #48484b;
+    }
 `;
 
 

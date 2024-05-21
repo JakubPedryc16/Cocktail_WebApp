@@ -1,36 +1,46 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const LimeSquare = styled.div`
-    width: 200px;
-    height: 200px;
-    background-color: rgb(0, 130, 120);;
+const LimeButton = styled.button`
+    width: 250px;
+    height: 250px;
+    background-color: rgba(0, 0, 0, 0.25);
+    border: none;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
     padding: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s, border 0.3s;
+
+    &:hover {
+        background-color: rgba(0, 130, 120, 0.5);
+    }
+    &:active {
+        background-color: rgba(0, 130, 120, 0.75);
+    }
 `;
 
 const LimeImage = styled.img`
-    width: 150px; 
-    height: 150px; 
-    border-radius: 50%; 
-    object-fit: cover; 
+    width: 100%;
+    height: 150px;
+    border-radius: 10px;
+    object-fit: cover;
 `;
 
 const LimeText = styled.div`
     color: white;
-    font-size: 18px;
+    font-size: 24px;
 `;
 
-const Cocktail = ({ imageSrc, text }) => {
+const Cocktail = ({ imageSrc, text, onClick, selected }) => {
     return (
-        <LimeSquare>
-            <LimeImage src={imageSrc} alt="Lime" />
+        <LimeButton onClick={onClick} selected={selected}>
+            <LimeImage src={imageSrc} alt="Cocktail" />
             <LimeText>{text}</LimeText>
-        </LimeSquare>
+        </LimeButton>
     );
 };
 

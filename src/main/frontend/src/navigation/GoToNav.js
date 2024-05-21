@@ -14,6 +14,6 @@ export const goToSearch = () => {
     window.location.href = "/search";
 };
 
-export const goToAboutMe = () => {
-    window.location.href = "/aboutme";
+export const goToProfile = () => {
+    window.location.href = "/profile";
 };

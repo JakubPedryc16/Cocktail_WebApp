@@ -11,9 +11,14 @@ const SearchInput = styled.input`
     outline: none;
 `;
 
-const SearchBar = ({ placeholder }) => {
+const SearchBar = ({ placeholder, value, onChange }) => {
     return (
-        <SearchInput type="text" placeholder={placeholder} />
+        <SearchInput
+            type="text"
+             placeholder={placeholder}
+             value={value}
+             onChange={onChange}
+        />
     );
 };
 
