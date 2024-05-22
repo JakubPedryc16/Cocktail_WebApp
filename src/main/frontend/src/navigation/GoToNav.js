@@ -17,3 +17,6 @@ export const goToSearch = () => {
 export const goToProfile = () => {
     window.location.href = "/profile";
 };
+export const goToAddCocktail = () => {
+    window.location.href = "/addcocktail";
+};

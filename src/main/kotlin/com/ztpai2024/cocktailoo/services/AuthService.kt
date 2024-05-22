@@ -39,14 +39,16 @@ class AuthService(
 
     fun authenticate(input: LoginUserDto): User? {
         try {
-            authenticationManager.authenticate(
+            val authUser = authenticationManager.authenticate(
                 UsernamePasswordAuthenticationToken(
                     input.email,
                     input.password
                 )
             )
+
         } catch (e: AuthenticationException) {
             println("Wystąpił błąd podczas uwierzytelniania: ${e.message}")
+            return null
 
         }
         return userRepository.findByEmail(input.email)

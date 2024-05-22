@@ -3,28 +3,22 @@ package com.ztpai2024.cocktailoo.repositories
 import com.ztpai2024.cocktailoo.entities.Cocktail
 import com.ztpai2024.cocktailoo.entities.Ingredient
 import com.ztpai2024.cocktailoo.entities.CocktailsIngredients
+import com.ztpai2024.cocktailoo.entities.Tag
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.springframework.stereotype.Repository
 
 @Repository
-class IngredientRepository {
+class TagRepository {
 
-    fun findAll(): List<Ingredient> {
+    fun findAll(): List<Tag> {
         return transaction {
-            Ingredient.all().toList()
+            Tag.all().toList()
         }
     }
 
-    fun findById(id: Int): Ingredient? {
+    fun findById(id: Int): Tag? {
         return transaction {
-            Ingredient.findById(id)
-        }
-    }
-
-    fun findByCocktailId(cocktailId: Int): List<Ingredient> {
-        return transaction {
-            val cocktail = Cocktail.findById(cocktailId)
-            cocktail?.ingredients?.toList() ?: emptyList()
+            Tag.findById(id)
         }
     }
 

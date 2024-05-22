@@ -5,6 +5,7 @@ import RegisterPage from "./Views/RegisterPage";
 import HomePage from "./Views/HomePage";
 import SearchPage from "./Views/SearchPage";
 import ProfilePage from "./Views/ProfilePage";
+import AddCocktailPage from "./Views/AddCocktailPage";
 
 function App() {
     return (
@@ -15,9 +16,10 @@ function App() {
                 <Route path="/home" element={<HomePage />} />
                 <Route path="/search" element={<SearchPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/addcocktail" element={<AddCocktailPage />} />
             </Routes>
         </Router>
     );
 }
 
-export default App; // Eksportuj komponent App jako domyślny eksport
+export default App;

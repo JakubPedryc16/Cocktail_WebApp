@@ -36,7 +36,7 @@ class SecurityConfiguration(
             .and()
             .authenticationProvider(authenticationProvider)
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter::class.java)
-
+        http.cors { cors -> cors.configurationSource(corsConfigurationSource()) }
         return http.build()
     }
 
@@ -44,14 +44,14 @@ class SecurityConfiguration(
     fun corsConfigurationSource(): CorsConfigurationSource {
         val configuration = CorsConfiguration()
 
-        configuration.allowedOrigins = listOf("http://localhost:8080")
-        configuration.allowedMethods = listOf("GET", "POST")
-        configuration.allowedHeaders = listOf("Authorization", "Content-Type")
+        configuration.allowCredentials = true
+        configuration.allowedOrigins = listOf("http://localhost:8080", "http://localhost:3000")
+        configuration.allowedMethods = listOf("GET", "POST", "DELETE", "PUT")
+        configuration.allowedHeaders = listOf("*")
 
         val source = UrlBasedCorsConfigurationSource()
 
         source.registerCorsConfiguration("/**", configuration)
-
         return source
     }
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import MyButton from "../Basic/MyButton";
-import { goToHome, goToSearch, goToProfile } from '../../navigation/GoToNav'
+import { goToHome, goToSearch, goToProfile,goToAddCocktail } from '../../navigation/GoToNav'
 
 const handleLogout = () => {
     console.log("Logging out");
@@ -16,6 +16,7 @@ function Navbar() {
                     <NavButton onClick={goToHome}>Home</NavButton>
                     <NavButton onClick={goToSearch}>Cocktails</NavButton>
                     <NavButton onClick={goToProfile}>Profile</NavButton>
+                    <NavButton onClick={goToAddCocktail}>AddCocktail</NavButton>
                     <NavButton onClick={handleLogout}>Logout</NavButton>
                 </NavButtons>
         </NavbarContainer>
