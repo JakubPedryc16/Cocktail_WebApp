@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 
 // Stylizowany przycisk dla karty składnika
-const IngredientButton = styled.button`
-    width: 200px;
-    height: 200px;
+const IngredientCard = styled.button`
+    width: 150px;
+    height: 150px;
     background-color: rgba(0, 0, 0, 0.25);
     border-radius: 10px;
     display: flex;
@@ -15,6 +15,7 @@ const IngredientButton = styled.button`
     border: none;
     cursor: pointer;
     transition: background-color 0.3s;
+    margin: 5px;
 
     &:hover {
         background-color: rgba(0, 0, 0, 0.5);
@@ -24,25 +25,25 @@ const IngredientButton = styled.button`
 // Stylizowany obrazek składnika
 const IngredientImage = styled.img`
     width: 100%;
-    height: 150px;
+    height: 80px;
     border-radius: 10px;
     object-fit: cover;
 `;
 
-// Stylizowany tekst składnika
+
 const IngredientText = styled.div`
     color: white;
-    font-size: 24px;
+    margin-top:10px;
+    font-size: 16px;
 `;
 
-// Komponent dla składnika
-const Ingredient = ({ id, ingredientName, ingredientImage, ingredientAmount }) => {
+const IngredientButton = ({ ingredient, onClick }) => {
     return (
-        <IngredientButton>
-            <IngredientImage src={ingredientImage} alt={ingredientName} />
-            <IngredientText>{ingredientName} ({ingredientAmount})</IngredientText>
-        </IngredientButton>
+        <IngredientCard onClick={onClick}>
+            <IngredientImage src={ingredient.ingredientImage} alt={ingredient.ingredientName} />
+            <IngredientText>{ingredient.ingredientName} ({ingredient.ingredientAmount})</IngredientText>
+        </IngredientCard>
     );
 };
 
-export default Ingredient;
+export default IngredientButton;

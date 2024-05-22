@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 
 // Stylizowany przycisk dla karty tagu
-const TagButton = styled.button`
-    width: 200px;
-    height: 100px;
+const TagCard = styled.button`
+    width: 150px;
+    height: 80px;
     background-color: rgba(0, 0, 0, 0.25);
     border-radius: 10px;
     display: flex;
@@ -14,25 +14,25 @@ const TagButton = styled.button`
     border: none;
     cursor: pointer;
     transition: background-color 0.3s;
+    margin: 5px;
 
     &:hover {
         background-color: rgba(0, 0, 0, 0.5);
     }
 `;
 
-// Stylizowany tekst tagu
+
 const TagText = styled.div`
     color: white;
     font-size: 24px;
 `;
 
-// Komponent dla tagu
-const Tag = ({ id, tagName }) => {
+const TagButton = ({ tag, onClick }) => {
     return (
-        <TagButton>
-            <TagText>{tagName}</TagText>
-        </TagButton>
+        <TagCard onClick={onClick}>
+            <TagText>{tag.tagName}</TagText>
+        </TagCard>
     );
 };
 
-export default Tag;
+export default TagButton;

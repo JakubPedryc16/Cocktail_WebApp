@@ -24,31 +24,37 @@ class CocktailRepository  {
     }
 
     fun addCocktail(cocktailData: CocktailDto) {
-        transaction {
-            val authentication: Authentication = SecurityContextHolder.getContext().authentication
+        try {
+            transaction {
+                val authentication: Authentication = SecurityContextHolder.getContext().authentication
 
-            val currentUser: User = authentication.principal as User
+                val currentUser: User = authentication.principal as User
 
-            val newCocktail = Cocktail.new {
-                this.user = currentUser
-                cocktailName = cocktailData.cocktailName
-                cocktailImage = cocktailData.cocktailImage
-            }
+                val newCocktail = Cocktail.new {
+                    this.user = currentUser
+                    cocktailName = cocktailData.cocktailName
+                    cocktailImage = cocktailData.cocktailImage
+                }
 
-            cocktailData.ingredients.forEach { ingredientData ->
-                CocktailsIngredients.insert {
-                    it[cocktailId] = newCocktail.id
-                    it[ingredientId] = ingredientData.id
-                    it[amount] = ingredientData.ingredientAmount
+                cocktailData.ingredients.forEach { ingredientData ->
+                    CocktailsIngredients.insert {
+                        it[cocktailId] = newCocktail.id
+                        it[ingredientId] = ingredientData.id
+                        it[amount] = ingredientData.ingredientAmount
+                    }
+                }
+
+                cocktailData.tags.forEach { tagData ->
+                    CocktailsTags.insert {
+                        it[cocktailId] = newCocktail.id
+                        it[tagId] = tagData.id
+                    }
                 }
             }
-
-            cocktailData.tags.forEach { tagName ->
-                CocktailsTags.insert {
-                    it[cocktailId] = newCocktail.id
-                    it[tagId] = tagName.id
-                }
-            }
+        } catch (e: Exception) {
+            println("Error adding cocktail: ${e.message}")
+            // Możesz tutaj dodać dodatkową logikę obsługi błędów, np. ponowne wyrzucenie wyjątku lub inne działania
+            throw e
         }
     }
 }

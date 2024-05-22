@@ -31,7 +31,6 @@ class CocktailController(
     }
 
     @PostMapping("/add")
-    @ResponseStatus(HttpStatus.CREATED)
     fun addCocktail(@RequestBody cocktailData: CocktailDto): ResponseEntity<CocktailDto> {
         return try {
             cocktailRepository.addCocktail(cocktailData)

@@ -1,18 +1,80 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import IngredientButton from './IngredientButton'; // Zaimportuj komponent IngredientButton
-import TagButton from './TagButton'; // Zaimportuj komponent TagButton
+import styled from 'styled-components';
+import IngredientButton from './IngredientButton';
+import TagButton from './TagButton';
+
+const Container = styled.div`
+    margin: 20px;
+    min-height: calc(100vh - 400px); 
+    padding-bottom: 200px; 
+`;
+
+const Input = styled.input`
+    display: block;
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto 20px auto;
+`;
+
+const Section = styled.div`
+    margin-bottom: 40px;
+`;
+
+const SectionTitle = styled.h2`
+    margin-bottom: 20px;
+`;
+
+const ItemContainer = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    max-height: 400px;
+    overflow-y: scroll;
+    gap: 10px;
+`;
+
+const SelectedList = styled.ul`
+    list-style-type: none;
+    padding: 0;
+    text-align: center;
+    max-height: 100px; 
+    overflow-y: auto; 
+`;
+
+
+const SelectedListItem = styled.li`
+    margin: 5px 0;
+    width: 100%;
+    box-sizing: border-box;
+
+`;
+
+const Button = styled.button`
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #295c59;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 50px;
+
+    &:hover {
+        background-color: rgba(0,0,0,0.25);
+    }
+`;
 
 function AddCocktailPage() {
     const [cocktailName, setCocktailName] = useState('');
     const [cocktailImage, setCocktailImage] = useState('');
     const [ingredients, setIngredients] = useState([]);
     const [tags, setTags] = useState([]);
-    const [currentIngredient, setCurrentIngredient] = useState({ id: '', ingredientName: '', ingredientImage: '', ingredientAmount: '' });
-    const [currentTag, setCurrentTag] = useState('');
+    const [selectedIngredients, setSelectedIngredients] = useState([]);
+    const [selectedTags, setSelectedTags] = useState([]);
 
     useEffect(() => {
-        // Pobierz listę składników z serwera przy załadowaniu komponentu
         const fetchIngredients = async () => {
             try {
                 const token = localStorage.getItem('token');
@@ -58,30 +120,30 @@ function AddCocktailPage() {
         fetchTags();
     }, []);
 
-    const handleAddIngredient = () => {
-        setIngredients([...ingredients, currentIngredient]);
-        setCurrentIngredient({ id: '', ingredientName: '', ingredientImage: '', ingredientAmount: '' });
+    const handleIngredientClick = (ingredient) => {
+        setSelectedIngredients([...selectedIngredients, ingredient]);
     };
 
-    const handleAddTag = () => {
-        setTags([...tags, currentTag]);
-        setCurrentTag('');
+    const handleTagClick = (tag) => {
+        setSelectedTags([...selectedTags, tag]);
     };
 
     const handleSubmit = async () => {
         const cocktailData = {
             cocktailName: cocktailName,
             cocktailImage: cocktailImage,
-            ingredients: ingredients.map(ing => ({
+            ingredients: selectedIngredients.map(ing => ({
                 id: ing.id,
                 ingredientName: ing.ingredientName,
+                ingredientImage: ing.ingredientImage,
                 ingredientAmount: ing.ingredientAmount
             })),
-            tags: tags.map(tag => ({
+            tags: selectedTags.map(tag => ({
                 id: tag.id,
                 tagName: tag.tagName
             }))
         };
+
         try {
             const token = localStorage.getItem('token');
             if (!token) {
@@ -101,61 +163,64 @@ function AddCocktailPage() {
     };
 
     return (
-        <div>
+        <Container>
             <h1>Add Cocktail</h1>
-            <input
+            <Input
                 type="text"
                 placeholder="Cocktail Name"
                 value={cocktailName}
                 onChange={(e) => setCocktailName(e.target.value)}
             />
-            <input
+            <Input
                 type="text"
                 placeholder="Cocktail Image URL"
                 value={cocktailImage}
                 onChange={(e) => setCocktailImage(e.target.value)}
             />
-            <div>
-                <h2>Ingredients</h2>
-                <select
-                    value={currentIngredient.id}
-                    onChange={(e) => setCurrentIngredient({ ...currentIngredient, id: e.target.value })}
-                >
-                    <option value="">Select Ingredient</option>
+            <Section>
+                <SectionTitle>Ingredients</SectionTitle>
+                <ItemContainer>
                     {ingredients.map((ingredient) => (
-                        <option key={ingredient.id} value={ingredient.id}>{ingredient.ingredientName}</option>
+                        <IngredientButton
+                            key={ingredient.id}
+                            ingredient={ingredient}
+                            onClick={() => handleIngredientClick(ingredient)}
+                        />
                     ))}
-                </select>
-                <input
-                    type="text"
-                    placeholder="Amount"
-                    value={currentIngredient.ingredientAmount}
-                    onChange={(e) => setCurrentIngredient({ ...currentIngredient, ingredientAmount: e.target.value })}
-                />
-                <button onClick={handleAddIngredient}>Add Ingredient</button>
-                <ul style={{ overflowY: 'scroll', maxHeight: '200px' }}>
-                    {ingredients.map((ingredient, index) => (
-                        <li key={index}><IngredientButton {...ingredient} /></li>
+                </ItemContainer>
+                <div>
+                    <SectionTitle>Selected Ingredients</SectionTitle>
+                    <SelectedList>
+                        {selectedIngredients.map((ingredient, index) => (
+                            <SelectedListItem key={index}>
+                                {ingredient.ingredientName} ({ingredient.ingredientAmount})
+                            </SelectedListItem>
+                        ))}
+                    </SelectedList>
+                </div>
+            </Section>
+            <Section>
+                <SectionTitle>Tags</SectionTitle>
+                <ItemContainer>
+                    {tags.map((tag) => (
+                        <TagButton
+                            key={tag.id}
+                            tag={tag}
+                            onClick={() => handleTagClick(tag)}
+                        />
                     ))}
-                </ul>
-            </div>
-            <div>
-                <h2>Tags</h2>
-                <input
-                    type="text"
-                    placeholder="Tag Name"
-                    value={currentTag}
-                    onChange={(e) => setCurrentTag(e.target.value)}
-                />
-                <button onClick={handleAddTag}>Add Tag</button>
-                <ul style={{ overflowY: 'scroll', maxHeight: '200px' }}>
-                    {tags.map((tag, index) => (
-                        <li key={index}><TagButton {...tag} /></li>
-                    ))}
-                </ul>
-            </div>
-            <button onClick={handleSubmit}>Save Cocktail</button>
-        </div>
+                </ItemContainer>
+                <div>
+                    <SectionTitle>Selected Tags</SectionTitle>
+                    <SelectedList>
+                        {selectedTags.map((tag, index) => (
+                            <SelectedListItem key={index}>{tag.tagName}</SelectedListItem>
+                        ))}
+                    </SelectedList>
+                </div>
+            </Section>
+            <Button onClick={handleSubmit}>Save Cocktail</Button>
+        </Container>
     );
 }
 
