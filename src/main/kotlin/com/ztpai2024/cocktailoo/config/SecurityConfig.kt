@@ -26,7 +26,7 @@ class SecurityConfiguration(
         http.csrf()
             .disable()
             .authorizeHttpRequests()
-            .requestMatchers("/auth/**")
+            .requestMatchers("/auth/**", "/uploads/**")
             .permitAll()
             .anyRequest()
             .authenticated()

@@ -22,7 +22,6 @@ const IngredientCard = styled.button`
     }
 `;
 
-// Stylizowany obrazek składnika
 const IngredientImage = styled.img`
     width: 100%;
     height: 80px;
@@ -41,7 +40,7 @@ const IngredientButton = ({ ingredient, onClick }) => {
     return (
         <IngredientCard onClick={onClick}>
             <IngredientImage src={ingredient.ingredientImage} alt={ingredient.ingredientName} />
-            <IngredientText>{ingredient.ingredientName} ({ingredient.ingredientAmount})</IngredientText>
+            <IngredientText>{ingredient.ingredientName}</IngredientText>
         </IngredientCard>
     );
 };

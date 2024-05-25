@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @RestController
 @RequestMapping("/users")
-class IngredientController(
+class nIngredientController(
     private val ingredientRepository: IngredientRepository
 ) {
 

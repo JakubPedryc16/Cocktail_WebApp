@@ -31,7 +31,7 @@ const ProfileForm = () => {
                     }
                 });
                 setUser(response.data);
-                setUserName(response.data.userEmail)
+                setUserName(response.data.userName)
                 setUserSurname(response.data.userSurname)
                 setUserEmail(response.data.userEmail)
             } catch (error) {

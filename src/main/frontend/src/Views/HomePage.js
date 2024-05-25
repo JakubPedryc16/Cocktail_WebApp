@@ -2,29 +2,48 @@ import React from 'react';
 import styled from 'styled-components';
 import Navbar from '../components/Complex/Navbar';
 import Logo from '../logo.png';
-import MyButton from "../components/Basic/MyButton";
-import EmptyWindow from '../components/Basic/EmptyWindow'
-import { goToHome, goToSearch } from '../navigation/GoToNav'
+import { goToAddCocktail, goToSearch } from "../navigation/GoToNav";
+import ImageButton from "../components/Basic/ImageButton";
+
 
 const WindowContainer = styled.div`
+    font-family: 'Roboto', sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    height: 90vh;
+    min-height: 90vh;
 `;
 
 const LogoImage = styled.img`
-    width: 500px;
+    width: 600px;
     height: auto;
-    margin-right: 200px;
+    position: fixed;
+    top: 50%;
+    left: 200px;
+    transform: translate(0, -50%);
+    z-index: 1;
+`;
+
+const ContentContainer = styled.div`
+    margin-top: 50px;
+    margin-right: 200px; 
+    z-index: 0;
+`;
+
+const StyledButtonContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin-left: 1000px;
 `;
 
 const WelcomeMessage = styled.h1`
     color: rgba(255, 255, 255, 0.75);
     font-size: 32px;
-    margin-left: 700px;
+    text-align: center;
 `;
 
 function HomePage() {
@@ -32,16 +51,32 @@ function HomePage() {
         <>
             <Navbar />
             <WindowContainer>
-                <WelcomeMessage>Welcome back!</WelcomeMessage>
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <LogoImage src={Logo} alt="Logo" />
-                    <EmptyWindow>
-                        <MyButton onClick = {goToSearch} >Search Cocktails </MyButton>
-                        <MyButton onClick = {goToHome} >Create Cocktail </MyButton>
-                        <MyButton onClick = {goToHome} >Find Me A Cocktail </MyButton>
-                    </EmptyWindow>
-                </div>
+                <LogoImage src={Logo} alt="Logo" />
+                <ContentContainer>
+                    <StyledButtonContainer>
+                        <WelcomeMessage>Welcome to the Drunked</WelcomeMessage>
+                        <ImageButton
+                            imageSrc="/test_cocktail_1.jpg"
+                            altText="Nazwa obrazu 1"
+                            buttonText="Search Cocktails"
+                            onClick={goToSearch}
+                        />
 
+                        <ImageButton
+                            imageSrc="/test_cocktail_1.jpg"
+                            altText="Nazwa obrazu 2"
+                            buttonText="Add Cocktail"
+                            onClick={goToAddCocktail}
+                        />
+
+                        <ImageButton
+                            imageSrc="/test_cocktail_1.jpg"
+                            altText="Nazwa obrazu 3"
+                            buttonText="Tekst na przycisku 3"
+                            onClick={goToSearch}
+                        />
+                    </StyledButtonContainer>
+                </ContentContainer>
             </WindowContainer>
         </>
     );

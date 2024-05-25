@@ -1,29 +1,31 @@
 import React from 'react';
 import styled from 'styled-components';
 import MyButton from "../Basic/MyButton";
-import { goToHome, goToSearch, goToProfile,goToAddCocktail } from '../../navigation/GoToNav'
+import { goToHome, goToSearch, goToProfile, goToAddCocktail } from '../../navigation/GoToNav';
 
 const handleLogout = () => {
     console.log("Logging out");
     localStorage.removeItem('token');
     window.location.href = "/login";
 };
-function Navbar() {
+
+const Navbar = () => {
     return (
         <NavbarContainer>
-            <Logo>Cocktailoo</Logo>
-                <NavButtons>
-                    <NavButton onClick={goToHome}>Home</NavButton>
-                    <NavButton onClick={goToSearch}>Cocktails</NavButton>
-                    <NavButton onClick={goToProfile}>Profile</NavButton>
-                    <NavButton onClick={goToAddCocktail}>AddCocktail</NavButton>
-                    <NavButton onClick={handleLogout}>Logout</NavButton>
-                </NavButtons>
+            <Logo>Drunked</Logo>
+            <NavButtons>
+                <NavButton onClick={goToHome}>Home</NavButton>
+                <NavButton onClick={goToSearch}>Cocktails</NavButton>
+                <NavButton onClick={goToProfile}>Profile</NavButton>
+                <NavButton onClick={goToAddCocktail}>Add Cocktail</NavButton>
+                <NavButton onClick={handleLogout}>Logout</NavButton>
+            </NavButtons>
         </NavbarContainer>
     );
 }
 
 const NavbarContainer = styled.div`
+    font-family: 'Roboto', sans-serif;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -36,35 +38,22 @@ const Logo = styled.div`
     font-size: 24px;
 `;
 
-const NavButtons = styled.a`
+const NavButtons = styled.div`
     display: flex;
-    margin-left: 20px;
-    text-decoration: none;
-    color: white;
-    cursor: pointer;
-    width: 30vw;
+    gap: 20px;
 `;
 
 const NavButton = styled.div`
-
-    margin-left: 20px;
+    padding: 10px 20px;
     color: white;
-    display: block;
-    text-align: center;
-    width: 6vw;
-    height: 3vh;
     font-size: 16px;
-    background-color: rgb(36, 35, 51);
-    border: none;
+    background-color: rgb(30, 30, 36);
     border-radius: 5px;
     cursor: pointer;
-    align-content: center;
 
     &:hover {
         background-color: #48484b;
     }
 `;
 
-
 export default Navbar;
-

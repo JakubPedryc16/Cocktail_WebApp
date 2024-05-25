@@ -61,14 +61,23 @@ const SearchPage = () => {
                         Authorization: `Bearer ${token}`
                     }
                 });
-                setCocktails(response.data);
-                setFilteredCocktails(response.data);
+
+                if (Array.isArray(response.data)) {
+                    setCocktails(response.data);
+                    setFilteredCocktails(response.data);
+                } else {
+                    console.error('Cocktails data is not an array:', response.data);
+                }
             } catch (error) {
                 console.error('Error fetching cocktails:', error);
             }
         };
 
-        fetchCocktails();
+        fetchCocktails()
+            .then(() => {})
+            .catch((error) => {
+                console.error('Error during fetchCocktails:', error);
+            });
     }, []);
 
     const fetchIngredients = async (cocktailId) => {
@@ -105,6 +114,7 @@ const SearchPage = () => {
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
     };
+
     return (
         <>
             <Navbar />
@@ -119,6 +129,7 @@ const SearchPage = () => {
                                 key={cocktail.id}
                                 imageSrc={cocktail.cocktailImage}
                                 text={cocktail.cocktailName}
+                                tags={cocktail.tags} // Pass the tags here
                                 onClick={() => handleCocktailClick(cocktail)}
                             />
                         ))}

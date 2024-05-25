@@ -1,5 +1,6 @@
 package com.ztpai2024.cocktailoo.controllers
 
+
 import com.ztpai2024.cocktailoo.dtos.CocktailDto
 import com.ztpai2024.cocktailoo.dtos.toDto
 import com.ztpai2024.cocktailoo.entities.Cocktail
@@ -8,16 +9,19 @@ import com.ztpai2024.cocktailoo.entities.Tag
 import com.ztpai2024.cocktailoo.repositories.CocktailRepository
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.springframework.http.HttpStatus
-
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.multipart.MultipartFile
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.Paths
+import java.util.*
 
 @RestController
 @RequestMapping("/users")
 class CocktailController(
     private val cocktailRepository: CocktailRepository
 ) {
-
     @GetMapping("/cocktails")
     fun getAllCocktails(): ResponseEntity<List<CocktailDto>> {
         return try {
@@ -35,12 +39,23 @@ class CocktailController(
         return try {
             cocktailRepository.addCocktail(cocktailData)
             ResponseEntity.ok(cocktailData)
-        }
-        catch (e: Exception) {
+        } catch (e: Exception) {
             println("Wystąpił błąd podczas dodawania koktajlu: ${e.message}")
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(cocktailData)
         }
     }
 
+    @PostMapping("/upload")
+    fun handleFileUpload(@RequestParam("file") file: MultipartFile): ResponseEntity<Map<String, String>> {
+        return try {
+            val uploadDir = "uploads/cocktails"
+            val filename = "${UUID.randomUUID()}_${file.originalFilename}"
+            val filepath: Path = Paths.get(uploadDir, filename)
+            Files.copy(file.inputStream, filepath)
+            ResponseEntity.ok(mapOf("fileName" to filename))
+        } catch (e: Exception) {
+            println("Wystąpił błąd podczas przesyłania pliku: ${e.message}")
+            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(mapOf("error" to "File upload failed"))
+        }
+    }
 }
-

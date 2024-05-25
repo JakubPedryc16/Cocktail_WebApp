@@ -3,11 +3,14 @@ import axios from 'axios';
 import styled from 'styled-components';
 import IngredientButton from './IngredientButton';
 import TagButton from './TagButton';
+import {goToHome, goToSearch} from "../../navigation/GoToNav";
 
 const Container = styled.div`
     margin: 20px;
-    min-height: calc(100vh - 400px); 
-    padding-bottom: 200px; 
+    min-height: calc(100vh - 400px);
+    padding-bottom: 200px;
+    color: white;
+    font-family: 'Roboto', sans-serif;
 `;
 
 const Input = styled.input`
@@ -30,7 +33,8 @@ const SectionTitle = styled.h2`
 const ItemContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
-    max-height: 400px;
+    max-height: 200px;
+    max-width: 800px;
     overflow-y: scroll;
     gap: 10px;
 `;
@@ -39,40 +43,80 @@ const SelectedList = styled.ul`
     list-style-type: none;
     padding: 0;
     text-align: center;
-    max-height: 100px; 
-    overflow-y: auto; 
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: rgba(0,0,0,0.2);
 `;
-
 
 const SelectedListItem = styled.li`
-    margin: 5px 0;
-    width: 100%;
+    margin: 15px 5px 15px;
+    width: 95%;
     box-sizing: border-box;
-
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 `;
 
-const Button = styled.button`
-    padding: 10px 20px;
-    font-size: 16px;
+const IngredientInfo = styled.div`
+    display: flex;
+    align-items: center;
+`;
+
+const RemoveButton = styled.button`
+    padding: 5px 10px;
     cursor: pointer;
+    background-color: #ff3b3b;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 14px;
+
+
+    &:hover {
+        background-color: rgba(0,0,0,0.25);
+    }
+`;
+const MainButton = styled.button`
+    padding: 10px 60px;
+    font-size: 16px;
+    cursor: pointer; 
     background-color: #295c59;
     color: #ffffff;
     border: none;
     border-radius: 5px;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
 
     &:hover {
         background-color: rgba(0,0,0,0.25);
     }
 `;
 
-function AddCocktailPage() {
+const QuantityInput = styled.input`
+    display: block;
+    padding: 5px;
+    font-size: 14px;
+    width: 100%;
+    max-width: 100px;
+    margin: 5px auto;
+`;
+const AmountWindow = styled.span` 
+    background-color: #295c59;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-left: 25px;
+`;
+
+function AddCocktailForm() {
     const [cocktailName, setCocktailName] = useState('');
     const [cocktailImage, setCocktailImage] = useState('');
     const [ingredients, setIngredients] = useState([]);
     const [tags, setTags] = useState([]);
     const [selectedIngredients, setSelectedIngredients] = useState([]);
     const [selectedTags, setSelectedTags] = useState([]);
+    const [file, setFile] = useState(null);
+    const [amount, setAmount] = useState('');
 
     useEffect(() => {
         const fetchIngredients = async () => {
@@ -121,61 +165,99 @@ function AddCocktailPage() {
     }, []);
 
     const handleIngredientClick = (ingredient) => {
-        setSelectedIngredients([...selectedIngredients, ingredient]);
+        if (!amount) {
+            return;
+        }
+        setSelectedIngredients([...selectedIngredients, { ...ingredient, amount }]);
     };
 
     const handleTagClick = (tag) => {
         setSelectedTags([...selectedTags, tag]);
     };
 
+    const handleFileChange = (e) => {
+        setFile(e.target.files[0]);
+    };
+
     const handleSubmit = async () => {
-        const cocktailData = {
-            cocktailName: cocktailName,
-            cocktailImage: cocktailImage,
-            ingredients: selectedIngredients.map(ing => ({
-                id: ing.id,
-                ingredientName: ing.ingredientName,
-                ingredientImage: ing.ingredientImage,
-                ingredientAmount: ing.ingredientAmount
-            })),
-            tags: selectedTags.map(tag => ({
-                id: tag.id,
-                tagName: tag.tagName
-            }))
-        };
+        if (file) {
+            const formData = new FormData();
+            formData.append('file', file);
 
-        try {
-            const token = localStorage.getItem('token');
-            if (!token) {
-                console.error('Unauthorised');
-                return;
-            }
-
-            const response = await axios.post("http://localhost:8080/users/add", cocktailData, {
-                headers: {
-                    Authorization: `Bearer ${token}`
+            try {
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    console.error('Unauthorised');
+                    return;
                 }
-            });
-            console.log("Cocktail added with ID:", response.data);
-        } catch (error) {
-            console.error("Error adding cocktail:", error);
+
+                const uploadResponse = await axios.post("http://localhost:8080/users/upload", formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                const imageName = uploadResponse.data.fileName;
+                setCocktailImage(imageName);
+
+                // Dodaj cocktailImage do cocktailData
+                const cocktailData = {
+                    cocktailName: cocktailName,
+                    cocktailImage: imageName,
+                    ingredients: selectedIngredients.map(ing => ({
+                        id: ing.id,
+                        ingredientName: ing.ingredientName,
+                        ingredientImage: ing.ingredientImage,
+                        ingredientAmount: ing.amount
+                    })),
+                    tags: selectedTags.map(tag => ({
+                        id: tag.id,
+                        tagName: tag.tagName
+                    }))
+                };
+
+                const response = await axios.post("http://localhost:8080/users/add", cocktailData, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                console.log("Cocktail added with ID:", response.data);
+            } catch (error) {
+                console.error("Error adding cocktail:", error);
+            }
+            goToSearch();
         }
+    };
+
+    const handleRemoveIngredient = (index) => {
+        const updatedIngredients = [...selectedIngredients];
+        updatedIngredients.splice(index, 1);
+        setSelectedIngredients(updatedIngredients);
+    };
+
+    const handleRemoveTag = (index) => {
+        const updatedTags = [...selectedTags];
+        updatedTags.splice(index, 1);
+        setSelectedTags(updatedTags);
     };
 
     return (
         <Container>
             <h1>Add Cocktail</h1>
-            <Input
-                type="text"
-                placeholder="Cocktail Name"
-                value={cocktailName}
-                onChange={(e) => setCocktailName(e.target.value)}
+            <Input type="text"
+              placeholder="Cocktail Name"
+              value={cocktailName}
+              onChange={(e) => setCocktailName(e.target.value)}
             />
             <Input
+                type="file"
+                onChange={handleFileChange}
+            />
+            <QuantityInput
                 type="text"
-                placeholder="Cocktail Image URL"
-                value={cocktailImage}
-                onChange={(e) => setCocktailImage(e.target.value)}
+                placeholder="Amount"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
             />
             <Section>
                 <SectionTitle>Ingredients</SectionTitle>
@@ -193,7 +275,11 @@ function AddCocktailPage() {
                     <SelectedList>
                         {selectedIngredients.map((ingredient, index) => (
                             <SelectedListItem key={index}>
-                                {ingredient.ingredientName} ({ingredient.ingredientAmount})
+                            <IngredientInfo>
+                                <AmountWindow>{ingredient.ingredientName}</AmountWindow>
+                                <AmountWindow>{ingredient.amount}</AmountWindow>
+                             </IngredientInfo>
+                                <RemoveButton onClick={() => handleRemoveIngredient(index)}>Remove</RemoveButton>
                             </SelectedListItem>
                         ))}
                     </SelectedList>
@@ -214,14 +300,20 @@ function AddCocktailPage() {
                     <SectionTitle>Selected Tags</SectionTitle>
                     <SelectedList>
                         {selectedTags.map((tag, index) => (
-                            <SelectedListItem key={index}>{tag.tagName}</SelectedListItem>
+                            <SelectedListItem key={index}>
+                                <IngredientInfo>
+                                <AmountWindow>{tag.tagName}</AmountWindow>
+                                </IngredientInfo>
+                                <RemoveButton onClick={() => handleRemoveTag(index)}>Remove</RemoveButton>
+                            </SelectedListItem>
                         ))}
                     </SelectedList>
                 </div>
             </Section>
-            <Button onClick={handleSubmit}>Save Cocktail</Button>
+            <MainButton onClick={handleSubmit}>Save Cocktail</MainButton>
         </Container>
     );
 }
 
-export default AddCocktailPage;
+export default AddCocktailForm;
+

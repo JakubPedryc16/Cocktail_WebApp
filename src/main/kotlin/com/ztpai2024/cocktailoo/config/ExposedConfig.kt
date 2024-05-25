@@ -8,6 +8,8 @@ import org.springframework.boot.autoconfigure.ImportAutoConfiguration
 import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 @Configuration
 @ImportAutoConfiguration(
@@ -25,4 +27,12 @@ class ExposedConfig {
 class JacksonConfiguration {
     @Bean
     fun objectMapper(): ObjectMapper = ObjectMapper().registerKotlinModule()
+}
+
+@Configuration
+class WebConfig : WebMvcConfigurer {
+    override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
+        registry.addResourceHandler("/uploads/**")
+            .addResourceLocations("file:uploads/")
+    }
 }
