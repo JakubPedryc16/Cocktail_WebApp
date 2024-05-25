@@ -78,4 +78,26 @@ class CocktailController(
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(mapOf("error" to "File upload failed"))
         }
     }
+
+    @DeleteMapping("/cocktails/{id}")
+    fun deleteCocktail(@PathVariable id: Int): ResponseEntity<String> {
+        return try {
+            val authentication: Authentication = SecurityContextHolder.getContext().authentication
+            val currentUser: User = authentication.principal as User
+
+            val cocktail = transaction { cocktailRepository.findById(id) }
+
+            if (cocktail == null) {
+                ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cocktail not found")
+            } else if (transaction { cocktail.user.id.value } != currentUser.id.value) {
+                ResponseEntity.status(HttpStatus.FORBIDDEN).body("You are not allowed to delete this cocktail")
+            } else {
+                transaction { cocktailRepository.deleteCocktail(id) }
+                ResponseEntity.ok("Cocktail deleted successfully")
+            }
+        } catch (e: Exception) {
+            println("Error deleting cocktail: ${e.message}")
+            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting cocktail")
+        }
+    }
 }

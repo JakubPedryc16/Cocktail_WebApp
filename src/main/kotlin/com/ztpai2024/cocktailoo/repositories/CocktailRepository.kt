@@ -3,6 +3,7 @@ package com.ztpai2024.cocktailoo.repositories
 import com.ztpai2024.cocktailoo.dtos.CocktailDto
 import com.ztpai2024.cocktailoo.entities.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.springframework.security.core.Authentication
@@ -66,7 +67,22 @@ class CocktailRepository  {
             }
         } catch (e: Exception) {
             println("Error adding cocktail: ${e.message}")
-            // Możesz tutaj dodać dodatkową logikę obsługi błędów, np. ponowne wyrzucenie wyjątku lub inne działania
+
+            throw e
+        }
+    }
+
+    fun deleteCocktail(id: Int) {
+        try {
+            transaction {
+
+                CocktailsIngredients.deleteWhere { CocktailsIngredients.cocktailId eq id }
+                CocktailsTags.deleteWhere { CocktailsTags.cocktailId eq id }
+
+                Cocktail.findById(id)?.delete()
+            }
+        } catch (e: Exception) {
+            println("Error deleting cocktail: ${e.message}")
             throw e
         }
     }
