@@ -20,3 +20,7 @@ export const goToProfile = () => {
 export const goToAddCocktail = () => {
     window.location.href = "/addcocktail";
 };
+
+export const goToDeleteCocktail = () => {
+    window.location.href = "/deletecocktail";
+};

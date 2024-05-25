@@ -31,7 +31,7 @@ class nIngredientController(
         }
     }
 
-    @GetMapping("/ingredients/{cocktailId}") // Endpoint dla pobierania składników konkretnego koktajlu
+    @GetMapping("/ingredients/{cocktailId}")
     @Transactional(readOnly = true)
     fun getCocktailIngredients(@PathVariable cocktailId: Int): ResponseEntity<List<IngredientDto>> {
         return try {

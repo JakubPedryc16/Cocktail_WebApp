@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Navbar from '../components/Complex/Navbar';
 import Logo from '../logo.png';
-import { goToAddCocktail, goToSearch } from "../navigation/GoToNav";
+import {goToAddCocktail, goToDeleteCocktail, goToSearch} from "../navigation/GoToNav";
 import ImageButton from "../components/Basic/ImageButton";
 
 
@@ -72,8 +72,8 @@ function HomePage() {
                         <ImageButton
                             imageSrc="/test_cocktail_1.jpg"
                             altText="Nazwa obrazu 3"
-                            buttonText="Tekst na przycisku 3"
-                            onClick={goToSearch}
+                            buttonText="Delete Cocktails"
+                            onClick={goToDeleteCocktail}
                         />
                     </StyledButtonContainer>
                 </ContentContainer>

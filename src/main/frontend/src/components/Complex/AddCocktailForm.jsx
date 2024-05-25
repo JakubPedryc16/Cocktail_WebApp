@@ -32,6 +32,7 @@ const SectionTitle = styled.h2`
 
 const ItemContainer = styled.div`
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
     max-height: 200px;
     max-width: 800px;
@@ -117,6 +118,8 @@ function AddCocktailForm() {
     const [selectedTags, setSelectedTags] = useState([]);
     const [file, setFile] = useState(null);
     const [amount, setAmount] = useState('');
+    const [searchQuery, setSearchQuery] = useState('');
+    const [filteredIngredients, setFilteredIngredients] = useState([])
 
     useEffect(() => {
         const fetchIngredients = async () => {
@@ -164,6 +167,13 @@ function AddCocktailForm() {
         fetchTags();
     }, []);
 
+    useEffect(() => {
+        setFilteredIngredients(ingredients.filter(ingredient =>
+            ingredient.ingredientName.toLowerCase().includes(searchQuery.toLowerCase())
+        ));
+    }, [ingredients, searchQuery]);
+
+
     const handleIngredientClick = (ingredient) => {
         if (!amount) {
             return;
@@ -177,6 +187,14 @@ function AddCocktailForm() {
 
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
+    };
+    const handleSearch = (e) => {
+        const query = e.target.value;
+        setSearchQuery(query);
+        const filtered = ingredients.filter(ingredient =>
+            ingredient.ingredientName.toLowerCase().includes(query.toLowerCase())
+        );
+        setFilteredIngredients(filtered);
     };
 
     const handleSubmit = async () => {
@@ -261,8 +279,14 @@ function AddCocktailForm() {
             />
             <Section>
                 <SectionTitle>Ingredients</SectionTitle>
+                <Input
+                    type="text"
+                    placeholder="Search Ingredients"
+                    value={searchQuery}
+                    onChange={handleSearch}
+                />
                 <ItemContainer>
-                    {ingredients.map((ingredient) => (
+                    {filteredIngredients.map((ingredient) => (
                         <IngredientButton
                             key={ingredient.id}
                             ingredient={ingredient}

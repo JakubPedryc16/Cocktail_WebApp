@@ -6,10 +6,13 @@ import com.ztpai2024.cocktailoo.dtos.toDto
 import com.ztpai2024.cocktailoo.entities.Cocktail
 import com.ztpai2024.cocktailoo.entities.Ingredient
 import com.ztpai2024.cocktailoo.entities.Tag
+import com.ztpai2024.cocktailoo.entities.User
 import com.ztpai2024.cocktailoo.repositories.CocktailRepository
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.core.Authentication
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import java.nio.file.Files
@@ -29,7 +32,24 @@ class CocktailController(
             val cocktailDtos = transaction { cocktails.map { it.toDto() }}
             ResponseEntity.ok(cocktailDtos)
         } catch (e: Exception) {
-            println("Wystąpił błąd podczas pobierania koktajli: ${e.message}")
+            println("Error during getAllCocktails: ${e.message}")
+            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(emptyList())
+        }
+    }
+
+    @GetMapping("/cocktails/me")
+    fun getCocktailsByUserId(): ResponseEntity<List<CocktailDto>> {
+        return try {
+            val authentication: Authentication = SecurityContextHolder.getContext().authentication
+            val currentUser: User = authentication.principal as User
+            val id: Int = currentUser.id.value;
+
+            val cocktails = transaction { cocktailRepository.findByUserId(id) }
+            val cocktailsDtos = transaction { cocktails.map { it.toDto() } }
+            ResponseEntity.ok(cocktailsDtos)
+        }
+        catch (e: Exception){
+            println("Error during getCocktailsByUserId: ${e.message}")
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(emptyList())
         }
     }

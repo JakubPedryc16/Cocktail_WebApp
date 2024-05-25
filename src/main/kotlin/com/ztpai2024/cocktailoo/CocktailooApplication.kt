@@ -3,14 +3,12 @@ package com.ztpai2024.cocktailoo
 
 
 import com.ztpai2024.cocktailoo.entities.*
-import org.jetbrains.exposed.spring.autoconfigure.ExposedAutoConfiguration
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
-import org.jetbrains.exposed.sql.update
+
 import org.springframework.boot.CommandLineRunner
-import org.springframework.boot.autoconfigure.ImportAutoConfiguration
 import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration
+
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
 

@@ -2,6 +2,7 @@ package com.ztpai2024.cocktailoo.repositories
 
 import com.ztpai2024.cocktailoo.dtos.CocktailDto
 import com.ztpai2024.cocktailoo.entities.*
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.springframework.security.core.Authentication
@@ -20,6 +21,18 @@ class CocktailRepository  {
     fun findById(id: Int): Cocktail? {
         return transaction {
             Cocktail.findById(id)
+        }
+    }
+
+    fun findByUserId(id: Int): List<Cocktail> {
+        return try {
+            transaction {
+                Cocktail.find { Cocktails.userId eq id }.toList()
+            }
+        }
+        catch (e: Exception) {
+            println("Error findByUserId: ${e.message}")
+            throw e;
         }
     }
 

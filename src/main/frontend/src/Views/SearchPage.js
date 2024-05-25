@@ -40,10 +40,10 @@ const Container = styled.div`
     overflow-y: auto;
 `;
 
-const SearchPage = () => {
+function SearchPage(){
     const [cocktails, setCocktails] = useState([]);
     const [ingredients, setIngredients] = useState([]);
-    const [selectedCocktail, setSelectedCocktail] = useState(null);
+
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredCocktails, setFilteredCocktails] = useState([]);
 
@@ -72,12 +72,8 @@ const SearchPage = () => {
                 console.error('Error fetching cocktails:', error);
             }
         };
-
         fetchCocktails()
             .then(() => {})
-            .catch((error) => {
-                console.error('Error during fetchCocktails:', error);
-            });
     }, []);
 
     const fetchIngredients = async (cocktailId) => {
@@ -100,7 +96,6 @@ const SearchPage = () => {
     };
 
     const handleCocktailClick = (cocktail) => {
-        setSelectedCocktail(cocktail);
         fetchIngredients(cocktail.id);
     };
 
@@ -152,6 +147,6 @@ const SearchPage = () => {
             </SearchPageContainer>
         </>
     );
-};
+}
 
 export default SearchPage;
