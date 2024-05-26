@@ -7,7 +7,7 @@ import {
     goToProfile,
     goToAddCocktail,
     goToDeleteCocktail,
-    goToAddIngredient
+    goToAddIngredient, goToDeleteIngredient
 } from '../../navigation/GoToNav';
 
 const handleLogout = () => {
@@ -23,6 +23,7 @@ const Navbar = () => {
         <NavbarContainer>
             <Logo>Drunked</Logo>
             <NavButtons>
+                {role === 'ADMIN' && <AdminNavButton onClick={() => goToDeleteIngredient()}>Delete Ingredient</AdminNavButton>}
                 {role === 'ADMIN' && <AdminNavButton onClick={() => goToAddIngredient()}>Add Ingredient</AdminNavButton>}
                 <NavButton onClick={goToHome}>Home</NavButton>
                 <NavButton onClick={goToSearch}>Cocktails</NavButton>

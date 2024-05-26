@@ -28,3 +28,6 @@ export const goToDeleteCocktail = () => {
 export const goToAddIngredient = () => {
     window.location.href = "/addingredient";
 };
+export const goToDeleteIngredient = () => {
+    window.location.href = "/deleteingredient";
+};

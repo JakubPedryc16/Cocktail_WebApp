@@ -57,4 +57,20 @@ class IngredientRepository {
         }
     }
 
+    fun deleteIngredient(id: Int) {
+        try {
+            transaction {
+            val ingredient = Ingredient.findById(id)
+            if (ingredient != null) {
+                    ingredient.delete()
+                } else {
+                    throw IllegalAccessException("You are not allowed to delete this ingredient")
+                }
+            }
+        } catch (e: Exception) {
+            println("Error deleting ingredient: ${e.message}")
+            throw e
+        }
+    }
+
 }

@@ -9,6 +9,7 @@ import AddCocktailPage from "./Views/AddCocktailPage";
 import DeleteCocktailPage from "./Views/DeleteCocktailPage";
 import AddIngredientForm from "./components/Complex/AddIngredientForm";
 import AddIngredientPage from "./Views/AddIngredientPage";
+import DeleteIngredientPage from "./Views/DeleteIngredientPage";
 
 function App() {
     return (
@@ -22,6 +23,7 @@ function App() {
                 <Route path="/addcocktail" element={<AddCocktailPage />} />
                 <Route path="/deletecocktail" element={<DeleteCocktailPage />} />
                 <Route path="/addingredient" element={<AddIngredientPage />} />
+                <Route path="/deleteingredient" element={<DeleteIngredientPage />} />
             </Routes>
         </Router>
     );
