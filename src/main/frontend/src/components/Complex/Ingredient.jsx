@@ -39,7 +39,7 @@ const IngredientAmount = styled.div`
 const Ingredient = ({ ingredientName, ingredientImage, ingredientAmount }) => {
     return (
         <IngredientCard>
-            <IngredientImage src={ingredientImage} alt={ingredientName} />
+            <IngredientImage src={`http://localhost:8080/uploads/ingredients/${ingredientImage}`} alt={ingredientName} />
             <IngredientName>{ingredientName}</IngredientName>
             <IngredientAmount>{ingredientAmount}</IngredientAmount>
         </IngredientCard>

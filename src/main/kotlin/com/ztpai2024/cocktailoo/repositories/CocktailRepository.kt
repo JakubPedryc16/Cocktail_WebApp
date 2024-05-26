@@ -13,10 +13,17 @@ import org.springframework.stereotype.Repository
 @Repository
 class CocktailRepository  {
     fun findAll(): List<Cocktail> {
-        return transaction {
-            Cocktail.all().toList()
-       }
+        return try {
+            transaction {
+                Cocktail.all().toList()
+            }
+        }
+        catch (e: Exception) {
+            println("Error findAll:CocktailRepository ${e.message}")
+            return emptyList()
+        }
     }
+
 
 
     fun findById(id: Int): Cocktail? {
@@ -75,15 +82,20 @@ class CocktailRepository  {
     fun deleteCocktail(id: Int) {
         try {
             transaction {
-
                 CocktailsIngredients.deleteWhere { CocktailsIngredients.cocktailId eq id }
                 CocktailsTags.deleteWhere { CocktailsTags.cocktailId eq id }
 
-                Cocktail.findById(id)?.delete()
+                val cocktail = Cocktail.findById(id)
+                if (cocktail != null) {
+                    cocktail.delete()
+                } else {
+                    println("Cocktail with id $id not found.")
+                }
             }
         } catch (e: Exception) {
-            println("Error deleting cocktail: ${e.message}")
+            println("Error deleting cocktail(REPOSITORY): ${e.message}")
             throw e
         }
     }
+
 }

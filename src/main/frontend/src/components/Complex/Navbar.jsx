@@ -1,7 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import MyButton from "../Basic/MyButton";
-import {goToHome, goToSearch, goToProfile, goToAddCocktail, goToDeleteCocktail} from '../../navigation/GoToNav';
+import {
+    goToHome,
+    goToSearch,
+    goToProfile,
+    goToAddCocktail,
+    goToDeleteCocktail,
+    goToAddIngredient
+} from '../../navigation/GoToNav';
 
 const handleLogout = () => {
     console.log("Logging out");
@@ -10,10 +17,13 @@ const handleLogout = () => {
 };
 
 const Navbar = () => {
+
+    const role = localStorage.getItem('role');
     return (
         <NavbarContainer>
             <Logo>Drunked</Logo>
             <NavButtons>
+                {role === 'ADMIN' && <AdminNavButton onClick={() => goToAddIngredient()}>Add Ingredient</AdminNavButton>}
                 <NavButton onClick={goToHome}>Home</NavButton>
                 <NavButton onClick={goToSearch}>Cocktails</NavButton>
                 <NavButton onClick={goToProfile}>Profile</NavButton>
@@ -57,5 +67,9 @@ const NavButton = styled.div`
         background-color: #48484b;
     }
 `;
+const AdminNavButton = styled(NavButton)`
+    background-color: rgb(60, 30, 36);
+    padding: 10px 20px;
+`
 
 export default Navbar;

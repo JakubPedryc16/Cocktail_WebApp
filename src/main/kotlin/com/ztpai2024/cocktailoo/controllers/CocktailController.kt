@@ -1,11 +1,8 @@
 package com.ztpai2024.cocktailoo.controllers
 
-
 import com.ztpai2024.cocktailoo.dtos.CocktailDto
 import com.ztpai2024.cocktailoo.dtos.toDto
 import com.ztpai2024.cocktailoo.entities.Cocktail
-import com.ztpai2024.cocktailoo.entities.Ingredient
-import com.ztpai2024.cocktailoo.entities.Tag
 import com.ztpai2024.cocktailoo.entities.User
 import com.ztpai2024.cocktailoo.repositories.CocktailRepository
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -13,6 +10,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import java.nio.file.Files
@@ -42,13 +40,16 @@ class CocktailController(
         return try {
             val authentication: Authentication = SecurityContextHolder.getContext().authentication
             val currentUser: User = authentication.principal as User
-            val id: Int = currentUser.id.value;
 
-            val cocktails = transaction { cocktailRepository.findByUserId(id) }
-            val cocktailsDtos = transaction { cocktails.map { it.toDto() } }
-            ResponseEntity.ok(cocktailsDtos)
-        }
-        catch (e: Exception){
+            val cocktails = if (currentUser.userRole == ("ADMIN")) {
+                transaction { cocktailRepository.findAll() }
+            } else {
+                transaction { cocktailRepository.findByUserId(currentUser.id.value) }
+            }
+
+            val cocktailDtos = transaction { cocktails.map { it.toDto() } }
+            ResponseEntity.ok(cocktailDtos)
+        } catch (e: Exception) {
             println("Error during getCocktailsByUserId: ${e.message}")
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(emptyList())
         }
@@ -89,7 +90,7 @@ class CocktailController(
 
             if (cocktail == null) {
                 ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cocktail not found")
-            } else if (transaction { cocktail.user.id.value } != currentUser.id.value) {
+            } else if (transaction { cocktail.user.id.value } != currentUser.id.value && currentUser.userRole != ("ADMIN")) {
                 ResponseEntity.status(HttpStatus.FORBIDDEN).body("You are not allowed to delete this cocktail")
             } else {
                 transaction { cocktailRepository.deleteCocktail(id) }

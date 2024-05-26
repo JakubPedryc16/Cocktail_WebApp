@@ -9,9 +9,7 @@ import { goToRegistration } from '../../navigation/GoToNav'
 function LoginForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [messages, setMessages] = useState([]);
     const navigate = useNavigate();
-    const [credentialsError, setCredentialsError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [signupMessage, setSignupMessage] = useState('');
 
@@ -33,15 +31,16 @@ function LoginForm() {
             });
 
             const token = response.data.token;
+            const role = response.data.role;
 
             localStorage.setItem('token', token);
-            //     go to page
+            localStorage.setItem('role', role)
+
             navigate("/home");
 
         } catch(error) {
             if(error.response && error.response.status === 403) {
                 setErrorMessage('Incorrect username or password');
-                setCredentialsError(true);
             }
             else
                 setErrorMessage('Login error, try later');

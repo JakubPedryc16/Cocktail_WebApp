@@ -1,5 +1,7 @@
 package com.ztpai2024.cocktailoo.repositories
 
+import com.ztpai2024.cocktailoo.dtos.UserDto
+import com.ztpai2024.cocktailoo.dtos.toDto
 import com.ztpai2024.cocktailoo.entities.User
 import com.ztpai2024.cocktailoo.entities.Users
 import kotlinx.coroutines.selects.select
@@ -41,25 +43,3 @@ class UserRepository {
     }
 }
 
-data class UserDto(
-    val id: Int,
-    val userEmail: String,
-    val userName: String,
-    val userSurname: String
-)
-
-fun User.toDto() = UserDto(
-    id = id.value,
-    userEmail = userEmail,
-    userName = userDetails.userName,
-    userSurname = userDetails.userSurname
-)
-
-data class AuthUserDto(
-    val email: String,
-    val password: String,
-)
-fun User.toAuthDto() = AuthUserDto(
-    email = userEmail,
-    password = userPassword
-)

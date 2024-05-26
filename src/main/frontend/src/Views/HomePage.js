@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import Navbar from '../components/Complex/Navbar';
 import Logo from '../logo.png';
-import {goToAddCocktail, goToDeleteCocktail, goToSearch} from "../navigation/GoToNav";
+import {goToAddCocktail, goToDeleteCocktail, goToLogin, goToSearch} from "../navigation/GoToNav";
 import ImageButton from "../components/Basic/ImageButton";
+import axios from "axios";
 
 
 const WindowContainer = styled.div`
@@ -47,6 +48,15 @@ const WelcomeMessage = styled.h1`
 `;
 
 function HomePage() {
+    const [isAdmin, setIsAdmin] = useState(false);
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            goToLogin();
+        }
+    }, []);
+
     return (
         <>
             <Navbar />

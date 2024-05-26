@@ -3,11 +3,13 @@ package com.ztpai2024.cocktailoo.services
 
 import com.ztpai2024.cocktailoo.dtos.LoginUserDto
 import com.ztpai2024.cocktailoo.dtos.RegisterUserDto
+import com.ztpai2024.cocktailoo.dtos.UserDto
+import com.ztpai2024.cocktailoo.dtos.toDto
 import com.ztpai2024.cocktailoo.entities.User
 import com.ztpai2024.cocktailoo.entities.UsersDetails.userName
-import com.ztpai2024.cocktailoo.repositories.UserDto
+
 import com.ztpai2024.cocktailoo.repositories.UserRepository
-import com.ztpai2024.cocktailoo.repositories.toDto
+
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
@@ -39,7 +41,7 @@ class AuthService(
 
     fun authenticate(input: LoginUserDto): User? {
         try {
-            val authUser = authenticationManager.authenticate(
+            authenticationManager.authenticate(
                 UsernamePasswordAuthenticationToken(
                     input.email,
                     input.password

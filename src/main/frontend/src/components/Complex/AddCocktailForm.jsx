@@ -218,7 +218,6 @@ function AddCocktailForm() {
                 const imageName = uploadResponse.data.fileName;
                 setCocktailImage(imageName);
 
-                // Dodaj cocktailImage do cocktailData
                 const cocktailData = {
                     cocktailName: cocktailName,
                     cocktailImage: imageName,

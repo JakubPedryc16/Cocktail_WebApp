@@ -36,7 +36,7 @@ function DeleteCocktailPage() {
     useEffect(() => {
         const fetchCocktails = async () => {
             try {
-                const cocktailData = await fetchDataWithToken('http://localhost:8080/users/cocktails');
+                const cocktailData = await fetchDataWithToken('http://localhost:8080/users/cocktails/me');
                 if (Array.isArray(cocktailData)) {
                     setCocktails(cocktailData);
                 } else {

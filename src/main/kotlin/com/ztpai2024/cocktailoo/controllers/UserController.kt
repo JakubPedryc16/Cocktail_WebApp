@@ -1,5 +1,7 @@
 package com.ztpai2024.cocktailoo.controllers
 
+import com.ztpai2024.cocktailoo.dtos.UserDto
+import com.ztpai2024.cocktailoo.dtos.toDto
 import com.ztpai2024.cocktailoo.entities.User
 import com.ztpai2024.cocktailoo.repositories.*
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -43,7 +45,7 @@ class UserController(){
         return ResponseEntity.ok(userDto)
     }
 
-    @GetMapping("/")
+    @GetMapping("/admin")
     fun allUsers(): ResponseEntity<List<UserDto>> {
         val users: List<UserDto> = userRepository.findAll().map { transaction{it.toDto()} }
 

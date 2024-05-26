@@ -25,7 +25,7 @@ data class IngredientDto(
     val id: Int,
     val ingredientName: String,
     val ingredientImage: String,
-    val ingredientAmount: String
+    val ingredientAmount: String = ""
 )
 
 fun Ingredient.toDto() = IngredientDto(

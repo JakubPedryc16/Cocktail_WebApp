@@ -24,3 +24,7 @@ export const goToAddCocktail = () => {
 export const goToDeleteCocktail = () => {
     window.location.href = "/deletecocktail";
 };
+
+export const goToAddIngredient = () => {
+    window.location.href = "/addingredient";
+};

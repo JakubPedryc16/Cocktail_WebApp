@@ -39,7 +39,7 @@ const IngredientText = styled.div`
 const IngredientButton = ({ ingredient, onClick }) => {
     return (
         <IngredientCard onClick={onClick}>
-            <IngredientImage src={ingredient.ingredientImage} alt={ingredient.ingredientName} />
+            <IngredientImage src={`http://localhost:8080/uploads/ingredients/${ingredient.ingredientImage}`} alt={ingredient.ingredientName} />
             <IngredientText>{ingredient.ingredientName}</IngredientText>
         </IngredientCard>
     );
