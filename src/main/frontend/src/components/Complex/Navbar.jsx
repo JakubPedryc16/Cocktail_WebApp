@@ -37,6 +37,9 @@ const Navbar = () => {
     );
 }
 
+export default Navbar;
+
+
 const NavbarContainer = styled.div`
     font-family: 'Roboto', sans-serif;
     display: flex;
@@ -72,5 +75,3 @@ const AdminNavButton = styled(NavButton)`
     background-color: rgb(60, 30, 36);
     padding: 10px 20px;
 `
-
-export default Navbar;

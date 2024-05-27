@@ -1,7 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 
-// Stylizowany przycisk dla karty składnika
+const IngredientButton = ({ ingredient, onClick }) => {
+    return (
+        <IngredientCard onClick={onClick}>
+            <IngredientImage src={`http://localhost:8080/uploads/ingredients/${ingredient.ingredientImage}`} alt={ingredient.ingredientName} />
+            <IngredientText>{ingredient.ingredientName}</IngredientText>
+        </IngredientCard>
+    );
+};
+export default IngredientButton;
+
+
 const IngredientCard = styled.button`
     width: 150px;
     height: 150px;
@@ -35,14 +45,3 @@ const IngredientText = styled.div`
     margin-top:10px;
     font-size: 16px;
 `;
-
-const IngredientButton = ({ ingredient, onClick }) => {
-    return (
-        <IngredientCard onClick={onClick}>
-            <IngredientImage src={`http://localhost:8080/uploads/ingredients/${ingredient.ingredientImage}`} alt={ingredient.ingredientName} />
-            <IngredientText>{ingredient.ingredientName}</IngredientText>
-        </IngredientCard>
-    );
-};
-
-export default IngredientButton;

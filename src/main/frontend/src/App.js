@@ -7,7 +7,7 @@ import SearchPage from "./Views/SearchPage";
 import ProfilePage from "./Views/ProfilePage";
 import AddCocktailPage from "./Views/AddCocktailPage";
 import DeleteCocktailPage from "./Views/DeleteCocktailPage";
-import AddIngredientForm from "./components/Complex/AddIngredientForm";
+import AddIngredientForm from "./components/Forms/AddIngredientForm";
 import AddIngredientPage from "./Views/AddIngredientPage";
 import DeleteIngredientPage from "./Views/DeleteIngredientPage";
 

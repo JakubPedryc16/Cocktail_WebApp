@@ -1,26 +1,15 @@
 import React from 'react';
-import styled from 'styled-components';
 import Navbar from '../components/Complex/Navbar';
-import Logo from '../logo.png';
-import AddCocktailForm from '../components/Complex/AddCocktailForm';
-
-const WindowContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    height: 90vh;
-`;
-
+import AddCocktailForm from '../components/Forms/AddCocktailForm';
+import {MainContainer} from "../components/StyledComponents/RegularComponents";
 
 function AddCocktailPage() {
     return (
         <>
             <Navbar />
-            <WindowContainer>
+            <MainContainer>
                 <AddCocktailForm />
-            </WindowContainer>
+            </MainContainer>
         </>
     );
 }

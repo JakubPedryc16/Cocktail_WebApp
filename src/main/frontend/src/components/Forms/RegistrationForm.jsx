@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import styled from 'styled-components';
 import EmptyWindow from '../Basic/EmptyWindow';
 import {useNavigate} from "react-router-dom";
+import {RegisterFormCard} from "../StyledComponents/SpecialComponents";
 function RegistrationForm() {
 
         const [name, setName] = useState('');
@@ -74,7 +74,7 @@ function RegistrationForm() {
 
         return (
         <EmptyWindow>
-            <StyledForm className="form_registration" onSubmit={handleSubmit}>
+            <RegisterFormCard className="form_registration" onSubmit={handleSubmit}>
 
                 {(errorMessage !== '') && <b className={errorMessage}>{errorMessage}</b>}
                 {(errorMessageEmail !== '') && <b className={errorMessage}>{errorMessageEmail}</b>}
@@ -134,61 +134,11 @@ function RegistrationForm() {
                 <button className="log_in_button" type="submit">
                     Sign up
                 </button>
-            </StyledForm>
+            </RegisterFormCard>
         </EmptyWindow>
         );
 }
 
-const StyledForm = styled.form`
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 
-    
-    .text, .mainText, .input_field, .log_in_button, .signup_link {
-        color: rgb(36, 35, 51);
-        font-family: 'Roboto', sans-serif;
-        margin: 5px;
-        text-align: center;
-        font-size: 16px;
-        width: 100%;
-    }
-
-    .mainText {
-        margin-bottom: 25px;
-        font-size: 25px;
-        font-weight: bold;
-        text-align: center;
-    }
-
-    .input_field input {
-        width: 85%;
-        padding: 10px;
-        margin-bottom: 10px;
-        border: none;
-        border-radius: 5px;
-    }
-
-    .log_in_button {
-        margin-top: 15px;
-        margin-bottom: 30px;
-        color: white;
-        display: block;
-        text-align: center;
-        width: 88%;
-        padding: 12px;
-        font-size: 16px;
-        background-color: rgb(36, 35, 51);
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    .signup_link {
-        display: flex;
-        justify-content: flex-start; 
-    }
-`;
 
 export default RegistrationForm;

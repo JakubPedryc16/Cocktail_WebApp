@@ -1,6 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
 
+const Cocktail = ({ imageSrc, text, tags, onClick }) => {
+    return (
+        <LimeButton onClick={onClick}>
+            <LimeImage src={`http://localhost:8080/uploads/cocktails/${imageSrc}`} alt={text} />
+            <LimeText>{text}</LimeText>
+            <TagContainer>
+                {tags.map(tag => (
+                    <Tag key={tag.id}>{tag.tagName}</Tag>
+                ))}
+            </TagContainer>
+        </LimeButton>
+    );
+};
+
+export default Cocktail;
+
+
 const LimeButton = styled.button`
     width: 220px;
     height: 280px;
@@ -52,19 +69,3 @@ const Tag = styled.span`
     border-radius: 5px;
     font-size: 14px;
 `;
-
-const Cocktail = ({ imageSrc, text, tags, onClick }) => {
-    return (
-        <LimeButton onClick={onClick}>
-            <LimeImage src={`http://localhost:8080/uploads/cocktails/${imageSrc}`} alt={text} />
-            <LimeText>{text}</LimeText>
-            <TagContainer>
-                {tags.map(tag => (
-                    <Tag key={tag.id}>{tag.tagName}</Tag>
-                ))}
-            </TagContainer>
-        </LimeButton>
-    );
-};
-
-export default Cocktail;

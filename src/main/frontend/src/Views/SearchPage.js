@@ -1,44 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import styled from 'styled-components';
 import SearchBar from '../components/Basic/SearchBar';
 import Cocktail from '../components/Complex/Cocktail';
 import Navbar from "../components/Complex/Navbar";
 import Ingredient from '../components/Complex/Ingredient';
+import {
+    CardsSection,
+    CocktailsPageContainer, CardTitle, MultipleCardsContainer
+} from "../components/StyledComponents/RegularComponents";
 
-const SearchPageContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    padding: 20px;
-`;
 
-const Section = styled.div`
-    flex: 2;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    margin-top: 20px;
-`;
-
-const TitleCocktails = styled.h2`
-    margin-bottom: 100px;
-`;
-
-const TitleIngredients = styled.h2`
-    color: white;
-    font-size: 30px;
-    margin-bottom: 115px;
-`;
-
-const Container = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    max-height: 50vh;
-    overflow-y: auto;
-`;
 
 function SearchPage(){
     const [cocktails, setCocktails] = useState([]);
@@ -113,12 +84,12 @@ function SearchPage(){
     return (
         <>
             <Navbar />
-            <SearchPageContainer>
-                <Section>
-                    <TitleCocktails>
+            <CocktailsPageContainer>
+                <CardsSection>
+                    <CardTitle>
                         <SearchBar placeholder="Search..." value={searchQuery} onChange={handleSearchChange} />
-                    </TitleCocktails>
-                    <Container>
+                    </CardTitle>
+                    <MultipleCardsContainer>
                         {filteredCocktails.map(cocktail => (
                             <Cocktail
                                 key={cocktail.id}
@@ -128,12 +99,12 @@ function SearchPage(){
                                 onClick={() => handleCocktailClick(cocktail)}
                             />
                         ))}
-                    </Container>
-                </Section>
+                    </MultipleCardsContainer>
+                </CardsSection>
 
-                <Section>
-                    <TitleIngredients>Ingredients</TitleIngredients>
-                    <Container>
+                <CardsSection>
+                    <CardTitle>Ingredients</CardTitle>
+                    <MultipleCardsContainer>
                         {ingredients.map(ingredient => (
                             <Ingredient
                                 key={ingredient.id}
@@ -142,9 +113,9 @@ function SearchPage(){
                                 ingredientAmount={ingredient.ingredientAmount}
                             />
                         ))}
-                    </Container>
-                </Section>
-            </SearchPageContainer>
+                    </MultipleCardsContainer>
+                </CardsSection>
+            </CocktailsPageContainer>
         </>
     );
 }

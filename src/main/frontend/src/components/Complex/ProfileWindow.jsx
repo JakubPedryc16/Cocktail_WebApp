@@ -2,13 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from "styled-components";
 
-/**
- * @typedef {Object} UserDto
- * @property {string} userEmail
- * @property {string} userName
- * @property {string} userSurname
- */
-
 const ProfileForm = () => {
     const [user, setUser] = useState(null);
     const [userName, setUserName] = useState(null);

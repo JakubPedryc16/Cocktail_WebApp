@@ -1,113 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import styled from 'styled-components';
-import IngredientButton from './IngredientButton';
-import TagButton from './TagButton';
-import {goToHome, goToSearch} from "../../navigation/GoToNav";
-
-const Container = styled.div`
-    margin: 20px;
-    min-height: calc(100vh - 400px);
-    padding-bottom: 200px;
-    color: white;
-    font-family: 'Roboto', sans-serif;
-`;
-
-const Input = styled.input`
-    display: block;
-    padding: 10px;
-    font-size: 16px;
-    width: 100%;
-    max-width: 500px;
-    margin: 0 auto 20px auto;
-`;
-
-const Section = styled.div`
-    margin-bottom: 40px;
-`;
-
-const SectionTitle = styled.h2`
-    margin-bottom: 20px;
-`;
-
-const ItemContainer = styled.div`
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    max-height: 200px;
-    max-width: 800px;
-    overflow-y: scroll;
-    gap: 10px;
-`;
-
-const SelectedList = styled.ul`
-    list-style-type: none;
-    padding: 0;
-    text-align: center;
-    max-height: 200px;
-    overflow-y: auto;
-    background-color: rgba(0,0,0,0.2);
-`;
-
-const SelectedListItem = styled.li`
-    margin: 15px 5px 15px;
-    width: 95%;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-`;
-
-const IngredientInfo = styled.div`
-    display: flex;
-    align-items: center;
-`;
-
-const RemoveButton = styled.button`
-    padding: 5px 10px;
-    cursor: pointer;
-    background-color: #ff3b3b;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    font-size: 14px;
-
-
-    &:hover {
-        background-color: rgba(0,0,0,0.25);
-    }
-`;
-const MainButton = styled.button`
-    padding: 10px 60px;
-    font-size: 16px;
-    cursor: pointer; 
-    background-color: #295c59;
-    color: #ffffff;
-    border: none;
-    border-radius: 5px;
-    margin-bottom: 20px;
-
-    &:hover {
-        background-color: rgba(0,0,0,0.25);
-    }
-`;
-
-const QuantityInput = styled.input`
-    display: block;
-    padding: 5px;
-    font-size: 14px;
-    width: 100%;
-    max-width: 100px;
-    margin: 5px auto;
-`;
-const AmountWindow = styled.span` 
-    background-color: #295c59;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 14px;
-    margin-left: 25px;
-`;
+import IngredientButton from '../Complex/IngredientButton';
+import TagButton from '../Complex/TagButton';
+import { goToSearch} from "../../navigation/GoToNav";
+import {ScrollingContainer} from "../StyledComponents/SpecialComponents";
+import {
+    Button,
+    CloseCardTitle,
+    ListContainer,
+    ListItem,
+    MultipleCardsContainerSmall, NoEffect, SmallButton, Input, SmallInput, ListElements
+} from "../StyledComponents/RegularComponents";
 
 function AddCocktailForm() {
     const [cocktailName, setCocktailName] = useState('');
@@ -259,7 +162,7 @@ function AddCocktailForm() {
     };
 
     return (
-        <Container>
+        <ScrollingContainer>
             <h1>Add Cocktail</h1>
             <Input type="text"
               placeholder="Cocktail Name"
@@ -270,21 +173,21 @@ function AddCocktailForm() {
                 type="file"
                 onChange={handleFileChange}
             />
-            <QuantityInput
+
+            <CloseCardTitle>Ingredients</CloseCardTitle>
+            <Input
+                type="text"
+                placeholder="Search Ingredients"
+                value={searchQuery}
+                onChange={handleSearch}
+            />
+            <SmallInput
                 type="text"
                 placeholder="Amount"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
             />
-            <Section>
-                <SectionTitle>Ingredients</SectionTitle>
-                <Input
-                    type="text"
-                    placeholder="Search Ingredients"
-                    value={searchQuery}
-                    onChange={handleSearch}
-                />
-                <ItemContainer>
+                <MultipleCardsContainerSmall>
                     {filteredIngredients.map((ingredient) => (
                         <IngredientButton
                             key={ingredient.id}
@@ -292,25 +195,24 @@ function AddCocktailForm() {
                             onClick={() => handleIngredientClick(ingredient)}
                         />
                     ))}
-                </ItemContainer>
+                </MultipleCardsContainerSmall>
                 <div>
-                    <SectionTitle>Selected Ingredients</SectionTitle>
-                    <SelectedList>
+                    <CloseCardTitle>Selected Ingredients</CloseCardTitle>
+                    <ListContainer>
                         {selectedIngredients.map((ingredient, index) => (
-                            <SelectedListItem key={index}>
-                            <IngredientInfo>
-                                <AmountWindow>{ingredient.ingredientName}</AmountWindow>
-                                <AmountWindow>{ingredient.amount}</AmountWindow>
-                             </IngredientInfo>
-                                <RemoveButton onClick={() => handleRemoveIngredient(index)}>Remove</RemoveButton>
-                            </SelectedListItem>
+                            <ListItem key={index}>
+                            <NoEffect>
+                                <ListElements>{ingredient.ingredientName}</ListElements>
+                                <ListElements>{ingredient.amount}</ListElements>
+                             </NoEffect>
+                                <SmallButton onClick={() => handleRemoveIngredient(index)}>Remove</SmallButton>
+                            </ListItem>
                         ))}
-                    </SelectedList>
+                    </ListContainer>
                 </div>
-            </Section>
-            <Section>
-                <SectionTitle>Tags</SectionTitle>
-                <ItemContainer>
+
+                <CloseCardTitle>Tags</CloseCardTitle>
+                <MultipleCardsContainerSmall>
                     {tags.map((tag) => (
                         <TagButton
                             key={tag.id}
@@ -318,23 +220,23 @@ function AddCocktailForm() {
                             onClick={() => handleTagClick(tag)}
                         />
                     ))}
-                </ItemContainer>
+                </MultipleCardsContainerSmall>
                 <div>
-                    <SectionTitle>Selected Tags</SectionTitle>
-                    <SelectedList>
+                    <CloseCardTitle>Selected Tags</CloseCardTitle>
+                    <ListContainer>
                         {selectedTags.map((tag, index) => (
-                            <SelectedListItem key={index}>
-                                <IngredientInfo>
-                                <AmountWindow>{tag.tagName}</AmountWindow>
-                                </IngredientInfo>
-                                <RemoveButton onClick={() => handleRemoveTag(index)}>Remove</RemoveButton>
-                            </SelectedListItem>
+                            <ListItem key={index}>
+                                <NoEffect>
+                                <ListElements>{tag.tagName}</ListElements>
+                                </NoEffect>
+                                <SmallButton onClick={() => handleRemoveTag(index)}>Remove</SmallButton>
+                            </ListItem>
                         ))}
-                    </SelectedList>
+                    </ListContainer>
                 </div>
-            </Section>
-            <MainButton onClick={handleSubmit}>Save Cocktail</MainButton>
-        </Container>
+
+            <Button onClick={handleSubmit}>Save Cocktail</Button>
+        </ScrollingContainer>
     );
 }
 

@@ -1,61 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import styled from 'styled-components';
 import { goToHome } from "../../navigation/GoToNav";
+import {AdminMainContainer, Button, CloseCardTitle, Input} from "../StyledComponents/RegularComponents";
 
-const Container = styled.div`
-    margin: 200px;
-    color: white;
-    font-family: 'Roboto', sans-serif;
-
-
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    
-    
-`;
-
-const ItemContainer = styled.div`
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    flex-direction: column  ;
-    flex-wrap: wrap;
-    gap: 10px;
-    width: 800px;
-    
-`;
-
-const Input = styled.input`
-    display: block;
-    padding: 10px;
-    font-size: 16px;
-    width: 100%;
-    max-width: 500px;
-    margin: 0 auto 20px auto;
-`;
-
-const MainButton = styled.button`
-    padding: 10px 60px;
-    font-size: 16px;
-    cursor: pointer;
-    background-color: #295c59;
-    color: #ffffff;
-    border: none;
-    border-radius: 5px;
-    margin-bottom: 20px;
-
-    &:hover {
-        background-color: rgba(0,0,0,0.25);
-    }
-`;
-
-const TitleIngredients = styled.h2`
-    color: white;
-    font-size: 30px;
-    text-align: center;
-`;
 
 function AddIngredientForm() {
     const [ingredientName, setIngredientName] = useState('');
@@ -71,7 +18,6 @@ function AddIngredientForm() {
             const formData = new FormData();
             formData.append('file', file);
             formData.append('ingredientName', ingredientName);
-            formData.append('ingredientAmount', ingredientAmount);
 
             try {
                 const token = localStorage.getItem('token');
@@ -90,8 +36,7 @@ function AddIngredientForm() {
 
                 const ingredientData = {
                     ingredientName: ingredientName,
-                    ingredientImage: imageName,
-                    ingredientAmount: ingredientAmount
+                    ingredientImage: imageName
                 };
 
                 const response = await axios.post("http://localhost:8080/admin/add", ingredientData, {
@@ -108,26 +53,19 @@ function AddIngredientForm() {
     };
 
     return (
-        <Container>
-            <ItemContainer>
-                <TitleIngredients>Add Ingredient</TitleIngredients>
+            <AdminMainContainer>
+                <CloseCardTitle>Add Ingredient</CloseCardTitle>
                 <Input type="text"
                        placeholder="Ingredient Name"
                        value={ingredientName}
                        onChange={(e) => setIngredientName(e.target.value)}
                 />
-                <Input type="number"
-                       placeholder="Ingredient Amount"
-                       value={ingredientAmount}
-                       onChange={(e) => setIngredientAmount(parseInt(e.target.value))}
-                />
                 <Input
                     type="file"
                     onChange={handleFileChange}
                 />
-                <MainButton onClick={handleSubmit}>Save Ingredient</MainButton>
-            </ItemContainer>
-        </Container>
+                <Button onClick={handleSubmit}>Save Ingredient</Button>
+            </AdminMainContainer>
     );
 }
 

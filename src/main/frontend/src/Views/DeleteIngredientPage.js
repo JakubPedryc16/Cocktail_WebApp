@@ -3,6 +3,12 @@ import axios from 'axios';
 import styled from 'styled-components';
 import Navbar from "../components/Complex/Navbar";
 import IngredientButton from '../components/Complex/IngredientButton';
+import {
+    CardsSection,
+    CardTitle,
+    MainContainer,
+    MultipleCardsContainer
+} from "../components/StyledComponents/RegularComponents";
 
 function DeleteIngredientPage() {
     const [ingredients, setIngredients] = useState([]);
@@ -77,9 +83,9 @@ function DeleteIngredientPage() {
         <>
             <Navbar />
             <MainContainer>
-                <Section>
-                    <TitleIngredients>Ingredients</TitleIngredients>
-                    <Container>
+                <CardsSection>
+                    <CardTitle>Ingredients</CardTitle>
+                    <MultipleCardsContainer>
                         {ingredients.map(ingredient => (
                             <IngredientButton
                                 key={ingredient.id}
@@ -87,42 +93,11 @@ function DeleteIngredientPage() {
                                 onClick={() => handleDeleteIngredient(ingredient.id)}
                             />
                         ))}
-                    </Container>
-                </Section>
+                    </MultipleCardsContainer>
+                </CardsSection>
             </MainContainer>
         </>
     );
 }
 
 export default DeleteIngredientPage;
-
-const MainContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    padding: 20px;
-`;
-
-const Section = styled.div`
-    flex: 2;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    margin-top: 20px;
-`;
-
-const TitleIngredients = styled.h2`
-    color: white;
-    font-size: 30px;
-    margin-bottom: 115px;
-`;
-
-const Container = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    max-height: 50vh;
-    max-width: 40vw;
-    overflow-y: auto;
-`;

@@ -1,6 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
 
+const Ingredient = ({ ingredientName, ingredientImage, ingredientAmount }) => {
+    return (
+        <IngredientCard>
+            <IngredientImage src={`http://localhost:8080/uploads/ingredients/${ingredientImage}`} alt={ingredientName} />
+            <IngredientName>{ingredientName}</IngredientName>
+            <IngredientAmount>{ingredientAmount}</IngredientAmount>
+        </IngredientCard>
+    );
+};
+
+export default Ingredient;
+
+
 const IngredientCard = styled.div`
     width: 180px;
     height: 180px;
@@ -36,14 +49,3 @@ const IngredientAmount = styled.div`
     opacity: 0.8;
 `;
 
-const Ingredient = ({ ingredientName, ingredientImage, ingredientAmount }) => {
-    return (
-        <IngredientCard>
-            <IngredientImage src={`http://localhost:8080/uploads/ingredients/${ingredientImage}`} alt={ingredientName} />
-            <IngredientName>{ingredientName}</IngredientName>
-            <IngredientAmount>{ingredientAmount}</IngredientAmount>
-        </IngredientCard>
-    );
-};
-
-export default Ingredient;

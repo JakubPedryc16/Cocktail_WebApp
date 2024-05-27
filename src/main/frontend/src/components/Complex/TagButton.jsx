@@ -1,7 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 
-// Stylizowany przycisk dla karty tagu
+const TagButton = ({ tag, onClick }) => {
+    return (
+        <TagCard onClick={onClick}>
+            <TagText>{tag.tagName}</TagText>
+        </TagCard>
+    );
+};
+
+export default TagButton;
+
 const TagCard = styled.button`
     width: 150px;
     height: 80px;
@@ -26,13 +35,3 @@ const TagText = styled.div`
     color: white;
     font-size: 24px;
 `;
-
-const TagButton = ({ tag, onClick }) => {
-    return (
-        <TagCard onClick={onClick}>
-            <TagText>{tag.tagName}</TagText>
-        </TagCard>
-    );
-};
-
-export default TagButton;

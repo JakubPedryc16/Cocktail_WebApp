@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import styled from 'styled-components';
-import SearchBar from '../components/Basic/SearchBar';
 import Cocktail from '../components/Complex/Cocktail';
 import Navbar from "../components/Complex/Navbar";
 import Ingredient from '../components/Complex/Ingredient';
-import SearchPage from "./SearchPage";
+import {
+    CardsSection, CardTitle, CocktailsPageContainer,
+    MultipleCardsContainer
+} from "../components/StyledComponents/RegularComponents";
+import {DeleteButton} from "../components/StyledComponents/SpecialComponents";
+
 
 function DeleteCocktailPage() {
     const [cocktails, setCocktails] = useState([]);
@@ -105,10 +108,10 @@ function DeleteCocktailPage() {
     return (
         <>
             <Navbar />
-            <MainContainer>
-                <Section>
-                    <TitleCocktails>Cocktails</TitleCocktails>
-                    <Container>
+            <CocktailsPageContainer>
+                <CardsSection>
+                    <CardTitle>Cocktails</CardTitle>
+                    <MultipleCardsContainer>
                         {cocktails.map(cocktail => (
                             <Cocktail
                                 key={cocktail.id}
@@ -118,11 +121,11 @@ function DeleteCocktailPage() {
                                 onClick={() => handleCocktailClick(cocktail)}
                             />
                         ))}
-                    </Container>
-                </Section>
-                <Section>
-                    <TitleIngredients>Ingredients</TitleIngredients>
-                    <Container>
+                    </MultipleCardsContainer>
+                </CardsSection>
+                <CardsSection>
+                    <CardTitle>Ingredients</CardTitle>
+                    <MultipleCardsContainer>
                         {ingredients.map(ingredient => (
                             <Ingredient
                                 key={ingredient.id}
@@ -132,64 +135,12 @@ function DeleteCocktailPage() {
                             />
                         ))}
                         <DeleteButton onClick={handleDeleteCocktail}>Delete</DeleteButton>
-                    </Container>
-                </Section>
-            </MainContainer>
+                    </MultipleCardsContainer>
+                </CardsSection>
+            </CocktailsPageContainer>
         </>
     );
 }
 
 export default DeleteCocktailPage;
 
-const MainContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    padding: 20px;
-`;
-
-const Section = styled.div`
-    flex: 2;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    margin-top: 20px;
-`;
-
-const TitleCocktails = styled.h2`
-    color: white;
-    font-size: 30px;
-    margin-bottom: 115px;
-`;
-
-const TitleIngredients = styled.h2`
-    color: white;
-    font-size: 30px;
-    margin-bottom: 115px;
-`;
-
-const Container = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    max-height: 50vh;
-    max-width: 40vw;
-    overflow-y: auto;
-`;
-
-const DeleteButton = styled.button`
-    position: fixed;
-    bottom: 50px;
-
-    padding: 15px 80px;
-    background-color: red;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 24px;
-    &:hover {
-        background-color: darkred;
-    }
-`;

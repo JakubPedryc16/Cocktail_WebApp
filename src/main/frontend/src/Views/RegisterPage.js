@@ -1,33 +1,15 @@
 import React from 'react';
-import RegistrationForm from '../components/Complex/RegistrationForm';
-import styled from 'styled-components';
-import Logo from '../logo.png';
-
-const RegisterContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center; 
-    text-align: center;
-    height: 100vh;
-`;
-
-const LogoImage = styled.img`
-    width: 500px;
-    height: auto;
-    margin-right: 200px;
-`;
-
+import RegistrationForm from '../components/Forms/RegistrationForm';
+import {ColumnContainer, LogoImage} from "../components/StyledComponents/RegularComponents";
 
 function RegisterPage() {
     return (
-        <RegisterContainer>
+        <ColumnContainer>
             <div style={{ display: 'flex', alignItems: 'center' }}>
-                <LogoImage src={Logo} alt="Logo" />
+                <LogoImage src={"../logo.png"} alt="Logo" />
                 <RegistrationForm />
             </div>
-        </RegisterContainer>
+        </ColumnContainer>
     );
 }
-
 export default RegisterPage;
