@@ -17,6 +17,20 @@ const EmptyWindow = styled.div`
     font-weight: normal;
     color: red;
     font-size: 15px;
+    
+    
+
+    @media (max-width: 1200px) {
+        width: 300px;
+        height: 400px;
+    }
+    
+    @media (max-width: 950px) {
+        width: 250px;
+        height: 300px;
+        font-size: 12px;
+    }
+    
 `;
 
 const EmptyWindowComponent = ({ children }) => {

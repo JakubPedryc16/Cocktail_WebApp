@@ -13,7 +13,7 @@ import {
     SmallButton,
     Input,
     SmallInput,
-    ListElements
+    ListElements, CardTitle
 } from "../StyledComponents/RegularComponents";
 import { fetchDataWithToken, postDataWithToken } from '../../utils/ApiUtils';
 
@@ -132,7 +132,7 @@ function AddCocktailForm() {
 
     return (
         <ScrollingContainer>
-            <h1>Add Cocktail</h1>
+            <CardTitle>Add Cocktail</CardTitle>
             <Input
                 type="text"
                 placeholder="Cocktail Name"

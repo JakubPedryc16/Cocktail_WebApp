@@ -28,10 +28,19 @@ const TagCard = styled.button`
     &:hover {
         background-color: rgba(0, 0, 0, 0.5);
     }
+
+    @media (max-width: 950px) {
+        width: 80px;
+        height: 50px;
+    }
 `;
 
 
 const TagText = styled.div`
     color: white;
     font-size: 24px;
+
+    @media (max-width: 950px) {
+        font-size: 16px;
+    }
 `;

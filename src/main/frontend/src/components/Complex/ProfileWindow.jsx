@@ -73,7 +73,7 @@ const ProfileContainer = styled.div`
     text-align: start;
     height: auto;
     width: 60%;
-    margin: 5% auto;
+    margin: 0 auto;
     color: #ecf0f1;
     font-size: 24px;
     border-radius: 10px;
@@ -88,6 +88,11 @@ const ProfileContainer = styled.div`
             opacity: 1;
         }
     }
+
+    @media (max-width: 1100px) {
+        font-size: 16px;
+        width: 80%;
+    }
 `;
 
 const ProfileItem = styled.div`
@@ -101,6 +106,9 @@ const Label = styled.span`
     color: #95a5a6;
     font-size: 20px;
     margin-right: 10px;
+    @media (max-width: 950px) {
+        font-size: 12px;
+    }
 `;
 
 const NotFoundStyle = styled.div`

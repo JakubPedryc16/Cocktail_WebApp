@@ -26,6 +26,11 @@ const IngredientCard = styled.div`
     padding: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-bottom: 15px;
+
+    @media (max-width: 1000px){
+        width: 100px;
+        height: 100px;
+    }
 `;
 
 const IngredientImage = styled.img`
@@ -34,6 +39,9 @@ const IngredientImage = styled.img`
     border-radius: 10px;
     object-fit: cover;
     margin-bottom: 10px;
+    @media (max-width: 1000px){
+        height: 60px;
+    }
 `;
 
 const IngredientName = styled.div`

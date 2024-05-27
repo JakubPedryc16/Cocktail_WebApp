@@ -30,6 +30,12 @@ const IngredientCard = styled.button`
     &:hover {
         background-color: rgba(0, 0, 0, 0.5);
     }
+
+    @media (max-width: 950px) {
+        width: 100px;
+        height: 80px;
+        padding: 5px;
+    }
 `;
 
 const IngredientImage = styled.img`
@@ -37,6 +43,11 @@ const IngredientImage = styled.img`
     height: 80px;
     border-radius: 10px;
     object-fit: cover;
+
+    @media (max-width: 950px) {
+        height: 50px;
+        width: 80%;
+    }
 `;
 
 
@@ -44,4 +55,8 @@ const IngredientText = styled.div`
     color: white;
     margin-top:10px;
     font-size: 16px;
+
+    @media (max-width: 950px) {
+        font-size: 12px;
+    }
 `;

@@ -28,8 +28,6 @@ const Navbar = () => {
                 <NavButton onClick={goToHome}>Home</NavButton>
                 <NavButton onClick={goToSearch}>Cocktails</NavButton>
                 <NavButton onClick={goToProfile}>Profile</NavButton>
-                <NavButton onClick={goToAddCocktail}>Add Cocktail</NavButton>
-                <NavButton onClick={goToDeleteCocktail}>Manage Cocktails</NavButton>
                 <NavButton onClick={handleLogout}>Logout</NavButton>
 
             </NavButtons>
@@ -45,18 +43,32 @@ const NavbarContainer = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
+    padding: 10px 0;
     background-color: rgb(0, 130, 120);
     color: white;
+    width: 100vw;
+
+    @media (max-width: 750px){
+        padding: 5px 10px;
+        
+    }
 `;
 
 const Logo = styled.div`
     font-size: 24px;
+    margin: 5px;
+    @media (max-width: 750px){
+        font-size: 15px;
+    }
 `;
 
 const NavButtons = styled.div`
     display: flex;
+    margin: 0 10px;
     gap: 20px;
+    @media (max-width: 768px) {
+        gap:5px;
+    }
 `;
 
 const NavButton = styled.div`
@@ -70,8 +82,12 @@ const NavButton = styled.div`
     &:hover {
         background-color: #48484b;
     }
+    
+    @media (max-width: 750px){
+        padding: 5px 10px;
+        font-size: 12px;
+    }
 `;
 const AdminNavButton = styled(NavButton)`
     background-color: rgb(60, 30, 36);
-    padding: 10px 20px;
 `

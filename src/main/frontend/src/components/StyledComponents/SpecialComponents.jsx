@@ -1,14 +1,31 @@
 import styled from "styled-components";
 
 export const LogoAnimated = styled.img`
-    width: 600px;
+    width: 30vw;
     height: auto;
-    position: fixed;
-    top: 50%;
-    left: 200px;
-    transform: translate(0, -50%);
+    margin: 0 auto;
+    display: block;
     z-index: 1;
+
+    
+    @media (max-width: 768px) {
+        width: 40vw;
+        margin-top: 5vh;
+    }
+    
+    @media (min-width: 950px) {
+        width: 30vw;
+        position: fixed;
+        top: 50%;
+        left: 200px;
+        transform: translate(0, -50%);
+    }
+    @media (min-width: 950px) {
+        left: 100px;
+    }
+    
 `;
+
 
 export const StyledForm = styled.form`
     width: 100%;

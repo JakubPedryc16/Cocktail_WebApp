@@ -39,6 +39,11 @@ const LimeButton = styled.button`
     &:active {
         background-color: rgba(0, 130, 120, 0.75);
     }
+
+    @media (max-width: 1000px){
+        width: 150px;
+        height: 200px;
+    }
 `;
 
 const LimeImage = styled.img`
@@ -46,12 +51,18 @@ const LimeImage = styled.img`
     height: 140px;
     border-radius: 10px;
     object-fit: cover;
+    @media (max-width: 1000px){
+        width: 100px;
+    }
 `;
 
 const LimeText = styled.div`
     color: white;
     font-size: 20px;
     text-align: center;
+    @media (max-width: 1000px){
+        font-size: 14px;
+    }
 `;
 
 const TagContainer = styled.div`
@@ -68,4 +79,9 @@ const Tag = styled.span`
     padding: 5px 10px;
     border-radius: 5px;
     font-size: 14px;
+    
+    @media (max-width: 1000px){
+        padding: 5px 5px;
+        font-size: 12px;
+    }
 `;

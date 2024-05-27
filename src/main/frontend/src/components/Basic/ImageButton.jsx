@@ -23,6 +23,14 @@ const StyledImageButton = styled.button`
     &:active {
         background-color: rgba(0, 130, 120, 0.75);
     }
+    @media (max-width: 1400px){
+        width: 400px;
+        height: 300px;
+    }
+    @media (max-width: 750px){
+        width: 300px;
+        height: 200px;
+    }
 `;
 
 const Image = styled.img`
@@ -36,6 +44,9 @@ const Text = styled.div`
     color: white;
     font-size: 24px;
     text-align: center;
+    @media (max-width: 768px) {
+        font-size: 16px;
+    }
 `;
 
 const ImageButton = ({ imageSrc, altText, buttonText, onClick }) => {
