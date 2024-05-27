@@ -20,7 +20,7 @@ export default Cocktail;
 
 const LimeButton = styled.button`
     width: 220px;
-    height: 280px;
+    height: 320px;
     background-color: rgba(0, 0, 0, 0.25);
     border: none;
     border-radius: 10px;
@@ -48,7 +48,7 @@ const LimeButton = styled.button`
 
 const LimeImage = styled.img`
     width: 100%;
-    height: 140px;
+    height: 180px;
     border-radius: 10px;
     object-fit: cover;
     @media (max-width: 1000px){

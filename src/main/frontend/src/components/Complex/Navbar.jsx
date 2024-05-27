@@ -1,12 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import MyButton from "../Basic/MyButton";
 import {
     goToHome,
     goToSearch,
     goToProfile,
-    goToAddCocktail,
-    goToDeleteCocktail,
     goToAddIngredient, goToDeleteIngredient
 } from '../../navigation/GoToNav';
 
@@ -46,7 +43,7 @@ const NavbarContainer = styled.div`
     padding: 10px 0;
     background-color: rgb(0, 130, 120);
     color: white;
-    width: 100vw;
+    width: 100%;
 
     @media (max-width: 750px){
         padding: 5px 10px;

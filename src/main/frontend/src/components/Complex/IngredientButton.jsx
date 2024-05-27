@@ -14,7 +14,7 @@ export default IngredientButton;
 
 const IngredientCard = styled.button`
     width: 150px;
-    height: 150px;
+    height: 200px;
     background-color: rgba(0, 0, 0, 0.25);
     border-radius: 10px;
     display: flex;
@@ -40,7 +40,7 @@ const IngredientCard = styled.button`
 
 const IngredientImage = styled.img`
     width: 100%;
-    height: 80px;
+    height: 120px;
     border-radius: 10px;
     object-fit: cover;
 

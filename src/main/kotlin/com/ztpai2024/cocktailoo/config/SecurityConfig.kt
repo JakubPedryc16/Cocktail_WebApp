@@ -29,7 +29,6 @@ class SecurityConfiguration(
             .authorizeHttpRequests { authorize ->
                 authorize
                     .requestMatchers("/auth/**", "/uploads/**").permitAll()
-                    .requestMatchers("/admin/**").hasRole("ADMIN")
                     .anyRequest().authenticated()
             }
             .sessionManagement { session ->

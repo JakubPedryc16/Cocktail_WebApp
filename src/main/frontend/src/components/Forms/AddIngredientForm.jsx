@@ -29,7 +29,7 @@ function AddIngredientForm() {
                     ingredientImage: imageName
                 };
 
-                const response = await postDataWithToken("http://localhost:8080/admin/add", ingredientData);
+                const response = await postDataWithToken("http://localhost:8080/users/admin/add", ingredientData);
 
                 if (response) {
                     console.log("Ingredient added with ID:", response);

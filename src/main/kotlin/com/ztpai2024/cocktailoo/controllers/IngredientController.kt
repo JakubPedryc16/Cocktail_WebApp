@@ -54,12 +54,14 @@ class IngredientController(
     @PostMapping("/admin/upload")
     fun handleFileUpload(@RequestParam("file") file: MultipartFile): ResponseEntity<Map<String, String>> {
         return try {
+
             val uploadDir = "uploads/ingredients"
             val filename = "${UUID.randomUUID()}_${file.originalFilename}"
             val filepath: Path = Paths.get(uploadDir, filename)
-            Files.createDirectories(filepath.parent)
             Files.copy(file.inputStream, filepath)
+
             ResponseEntity.ok(mapOf("fileName" to filename))
+
         } catch (e: Exception) {
             println("Wystąpił błąd podczas przesyłania pliku: ${e.message}")
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(mapOf("error" to "File upload failed"))

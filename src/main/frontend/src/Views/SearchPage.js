@@ -45,7 +45,8 @@ function SearchPage() {
 
     useEffect(() => {
         const filtered = cocktails.filter(cocktail =>
-            cocktail.cocktailName.toLowerCase().includes(searchQuery.toLowerCase())
+            cocktail.cocktailName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            cocktail.tags.some(tag => tag.tagName.toLowerCase().includes(searchQuery.toLowerCase()))
         );
         setFilteredCocktails(filtered);
     }, [searchQuery, cocktails]);
@@ -60,7 +61,7 @@ function SearchPage() {
             <CocktailsPageContainer>
                 <CardsSection>
                     <CardTitle>
-                        <SearchBar placeholder="Search..." value={searchQuery} onChange={handleSearchChange} />
+                        <SearchBar placeholder="Search by name or tag" value={searchQuery} onChange={handleSearchChange} />
                     </CardTitle>
                     <MultipleCardsContainer>
                         {filteredCocktails.map(cocktail => (

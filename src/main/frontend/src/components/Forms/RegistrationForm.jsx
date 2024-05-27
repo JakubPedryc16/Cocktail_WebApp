@@ -28,7 +28,7 @@ function RegistrationForm() {
         }
 
         function isPasswordStrongEnough() {
-            return password.length > 6;
+            return password.length >= 5;
         }
 
         const handleSubmit = async (event) => {
@@ -44,7 +44,7 @@ function RegistrationForm() {
                 hasError = true;
             }
             if(!isPasswordStrongEnough()) {
-                setErrorMessagePassword('Password must be longer than 5 characters');
+                setErrorMessagePassword('Password must have be at least 5 characters');
                 hasError = true;
             }
             if(!arePasswordTheSame()) {
@@ -56,7 +56,7 @@ function RegistrationForm() {
             }
 
             try {
-                const response = await axios.post("http://localhost:8080/auth/signup",
+                await axios.post("http://localhost:8080/auth/signup",
                     {
                         email,
                         password,

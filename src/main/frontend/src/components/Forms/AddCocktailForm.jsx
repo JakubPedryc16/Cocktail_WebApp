@@ -19,7 +19,6 @@ import { fetchDataWithToken, postDataWithToken } from '../../utils/ApiUtils';
 
 function AddCocktailForm() {
     const [cocktailName, setCocktailName] = useState('');
-    const [cocktailImage, setCocktailImage] = useState('');
     const [ingredients, setIngredients] = useState([]);
     const [tags, setTags] = useState([]);
     const [selectedIngredients, setSelectedIngredients] = useState([]);
@@ -91,11 +90,10 @@ function AddCocktailForm() {
             });
 
             if (uploadResponse) {
-                setCocktailImage(uploadResponse.fileName);
 
                 const cocktailData = {
                     cocktailName: cocktailName,
-                    cocktailImage: cocktailImage,
+                    cocktailImage: uploadResponse.fileName,
                     ingredients: selectedIngredients.map(ing => ({
                         id: ing.id,
                         ingredientName: ing.ingredientName,

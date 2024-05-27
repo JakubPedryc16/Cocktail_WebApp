@@ -9,7 +9,7 @@ export const MainContainer = styled.div`
     text-align: center;
     min-height: 90vh;
     color: white;
-    width: 100vw;
+    width: 100%;
     
 `;
 
@@ -24,7 +24,7 @@ export const ContentContainer = styled.div`
     margin-top: 50px;
     margin-right: 250px; 
     z-index: 0;
-    width:100%;
+
     @media (max-width: 950px) {
         margin-right: 0;
     }
@@ -128,6 +128,7 @@ export const MultipleCardsContainer = styled.div`
     justify-content: center;
     gap: 20px;
     max-height: 50vh;
+    max-width: 40vw;
     overflow-y: auto;
 
     @media (max-width: 950px) {
@@ -161,9 +162,6 @@ export const SmallInput = styled(Input)`
     max-width: 25%;
 
 `;
-
-
-
 
 export const Button = styled.button`
     padding: 10px 60px;

@@ -7,7 +7,6 @@ import SearchPage from "./Views/SearchPage";
 import ProfilePage from "./Views/ProfilePage";
 import AddCocktailPage from "./Views/AddCocktailPage";
 import DeleteCocktailPage from "./Views/DeleteCocktailPage";
-import AddIngredientForm from "./components/Forms/AddIngredientForm";
 import AddIngredientPage from "./Views/AddIngredientPage";
 import DeleteIngredientPage from "./Views/DeleteIngredientPage";
 
@@ -15,6 +14,7 @@ function App() {
     return (
         <Router>
             <Routes>
+                <Route path="" element={<LoginPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/home" element={<HomePage />} />

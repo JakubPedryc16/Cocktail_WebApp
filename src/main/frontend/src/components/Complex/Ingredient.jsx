@@ -16,7 +16,7 @@ export default Ingredient;
 
 const IngredientCard = styled.div`
     width: 180px;
-    height: 180px;
+    height: 200px;
     background-color: rgba(0, 0, 0, 0.25);
     border-radius: 10px;
     display: flex;
@@ -35,7 +35,7 @@ const IngredientCard = styled.div`
 
 const IngredientImage = styled.img`
     width: 100%;
-    height: 100px;
+    height: 140px;
     border-radius: 10px;
     object-fit: cover;
     margin-bottom: 10px;

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import Navbar from '../components/Complex/Navbar';
 import {goToAddCocktail, goToDeleteCocktail, goToLogin, goToSearch} from "../navigation/GoToNav";
 import ImageButton from "../components/Basic/ImageButton";
@@ -28,7 +28,6 @@ function HomePage() {
                 <ContentContainer>
                     <StyledButtonContainer>
                         <WelcomeMessage>Welcome to the Drunked</WelcomeMessage>
-
                         <ImageButton
                             imageSrc="/test_cocktail_1.jpg"
                             altText="Nazwa obrazu 1"

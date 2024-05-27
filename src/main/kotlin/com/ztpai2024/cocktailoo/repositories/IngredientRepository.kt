@@ -40,10 +40,6 @@ class IngredientRepository {
     fun addIngredient(ingredientData: IngredientDto) {
         try {
             transaction {
-                val authentication: Authentication = SecurityContextHolder.getContext().authentication
-
-                val currentUser: User = authentication.principal as User
-
                 val newCocktail = Ingredient.new {
                     ingredientName = ingredientData.ingredientName
                     ingredientImage = ingredientData.ingredientImage

@@ -51,13 +51,13 @@ export const postDataWithToken = async (url, data, headers = {}) => {
     try {
         const token = getToken();
         if (!token) {
+            console.log("Unauthorized")
             return null;
         }
 
         const response = await axios.post(url, data, {
             headers: {
                 Authorization: `Bearer ${token}`,
-                ...headers
             }
         });
 
