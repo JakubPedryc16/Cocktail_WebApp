@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import IngredientButton from '../Complex/IngredientButton';
 import TagButton from '../Complex/TagButton';
-import { goToSearch} from "../../navigation/GoToNav";
-import {ScrollingContainer} from "../StyledComponents/SpecialComponents";
+import { goToSearch } from "../../navigation/GoToNav";
+import { ScrollingContainer } from "../StyledComponents/SpecialComponents";
 import {
     Button,
     CloseCardTitle,
     ListContainer,
     ListItem,
-    MultipleCardsContainerSmall, NoEffect, SmallButton, Input, SmallInput, ListElements
+    MultipleCardsContainerSmall,
+    NoEffect,
+    SmallButton,
+    Input,
+    SmallInput,
+    ListElements
 } from "../StyledComponents/RegularComponents";
+import { fetchDataWithToken, postDataWithToken } from '../../utils/ApiUtils';
 
 function AddCocktailForm() {
     const [cocktailName, setCocktailName] = useState('');
@@ -22,25 +27,13 @@ function AddCocktailForm() {
     const [file, setFile] = useState(null);
     const [amount, setAmount] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
-    const [filteredIngredients, setFilteredIngredients] = useState([])
+    const [filteredIngredients, setFilteredIngredients] = useState([]);
 
     useEffect(() => {
         const fetchIngredients = async () => {
-            try {
-                const token = localStorage.getItem('token');
-                if (!token) {
-                    console.error('Unauthorised');
-                    return;
-                }
-
-                const response = await axios.get("http://localhost:8080/users/ingredients", {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-                setIngredients(response.data);
-            } catch (error) {
-                console.error("Error fetching ingredients:", error);
+            const data = await fetchDataWithToken("http://localhost:8080/users/ingredients");
+            if (data) {
+                setIngredients(data);
             }
         };
 
@@ -49,21 +42,9 @@ function AddCocktailForm() {
 
     useEffect(() => {
         const fetchTags = async () => {
-            try {
-                const token = localStorage.getItem('token');
-                if (!token) {
-                    console.error('Unauthorised');
-                    return;
-                }
-
-                const response = await axios.get("http://localhost:8080/users/tags", {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-                setTags(response.data);
-            } catch (error) {
-                console.error("Error fetching tags:", error);
+            const data = await fetchDataWithToken("http://localhost:8080/users/tags");
+            if (data) {
+                setTags(data);
             }
         };
 
@@ -75,7 +56,6 @@ function AddCocktailForm() {
             ingredient.ingredientName.toLowerCase().includes(searchQuery.toLowerCase())
         ));
     }, [ingredients, searchQuery]);
-
 
     const handleIngredientClick = (ingredient) => {
         if (!amount) {
@@ -91,6 +71,7 @@ function AddCocktailForm() {
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
     };
+
     const handleSearch = (e) => {
         const query = e.target.value;
         setSearchQuery(query);
@@ -105,25 +86,16 @@ function AddCocktailForm() {
             const formData = new FormData();
             formData.append('file', file);
 
-            try {
-                const token = localStorage.getItem('token');
-                if (!token) {
-                    console.error('Unauthorised');
-                    return;
-                }
+            const uploadResponse = await postDataWithToken("http://localhost:8080/users/upload", formData, {
+                'Content-Type': 'multipart/form-data'
+            });
 
-                const uploadResponse = await axios.post("http://localhost:8080/users/upload", formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-                const imageName = uploadResponse.data.fileName;
-                setCocktailImage(imageName);
+            if (uploadResponse) {
+                setCocktailImage(uploadResponse.fileName);
 
                 const cocktailData = {
                     cocktailName: cocktailName,
-                    cocktailImage: imageName,
+                    cocktailImage: cocktailImage,
                     ingredients: selectedIngredients.map(ing => ({
                         id: ing.id,
                         ingredientName: ing.ingredientName,
@@ -136,16 +108,13 @@ function AddCocktailForm() {
                     }))
                 };
 
-                const response = await axios.post("http://localhost:8080/users/add", cocktailData, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-                console.log("Cocktail added with ID:", response.data);
-            } catch (error) {
-                console.error("Error adding cocktail:", error);
+                const response = await postDataWithToken("http://localhost:8080/users/add", cocktailData);
+
+                if (response) {
+                    console.log("Cocktail added with ID:", response);
+                    goToSearch();
+                }
             }
-            goToSearch();
         }
     };
 
@@ -164,10 +133,11 @@ function AddCocktailForm() {
     return (
         <ScrollingContainer>
             <h1>Add Cocktail</h1>
-            <Input type="text"
-              placeholder="Cocktail Name"
-              value={cocktailName}
-              onChange={(e) => setCocktailName(e.target.value)}
+            <Input
+                type="text"
+                placeholder="Cocktail Name"
+                value={cocktailName}
+                onChange={(e) => setCocktailName(e.target.value)}
             />
             <Input
                 type="file"
@@ -187,53 +157,53 @@ function AddCocktailForm() {
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
             />
-                <MultipleCardsContainerSmall>
-                    {filteredIngredients.map((ingredient) => (
-                        <IngredientButton
-                            key={ingredient.id}
-                            ingredient={ingredient}
-                            onClick={() => handleIngredientClick(ingredient)}
-                        />
-                    ))}
-                </MultipleCardsContainerSmall>
-                <div>
-                    <CloseCardTitle>Selected Ingredients</CloseCardTitle>
-                    <ListContainer>
-                        {selectedIngredients.map((ingredient, index) => (
-                            <ListItem key={index}>
+            <MultipleCardsContainerSmall>
+                {filteredIngredients.map((ingredient) => (
+                    <IngredientButton
+                        key={ingredient.id}
+                        ingredient={ingredient}
+                        onClick={() => handleIngredientClick(ingredient)}
+                    />
+                ))}
+            </MultipleCardsContainerSmall>
+            <div>
+                <CloseCardTitle>Selected Ingredients</CloseCardTitle>
+                <ListContainer>
+                    {selectedIngredients.map((ingredient, index) => (
+                        <ListItem key={index}>
                             <NoEffect>
                                 <ListElements>{ingredient.ingredientName}</ListElements>
                                 <ListElements>{ingredient.amount}</ListElements>
-                             </NoEffect>
-                                <SmallButton onClick={() => handleRemoveIngredient(index)}>Remove</SmallButton>
-                            </ListItem>
-                        ))}
-                    </ListContainer>
-                </div>
-
-                <CloseCardTitle>Tags</CloseCardTitle>
-                <MultipleCardsContainerSmall>
-                    {tags.map((tag) => (
-                        <TagButton
-                            key={tag.id}
-                            tag={tag}
-                            onClick={() => handleTagClick(tag)}
-                        />
+                            </NoEffect>
+                            <SmallButton onClick={() => handleRemoveIngredient(index)}>Remove</SmallButton>
+                        </ListItem>
                     ))}
-                </MultipleCardsContainerSmall>
-                <div>
-                    <CloseCardTitle>Selected Tags</CloseCardTitle>
-                    <ListContainer>
-                        {selectedTags.map((tag, index) => (
-                            <ListItem key={index}>
-                                <NoEffect>
+                </ListContainer>
+            </div>
+
+            <CloseCardTitle>Tags</CloseCardTitle>
+            <MultipleCardsContainerSmall>
+                {tags.map((tag) => (
+                    <TagButton
+                        key={tag.id}
+                        tag={tag}
+                        onClick={() => handleTagClick(tag)}
+                    />
+                ))}
+            </MultipleCardsContainerSmall>
+            <div>
+                <CloseCardTitle>Selected Tags</CloseCardTitle>
+                <ListContainer>
+                    {selectedTags.map((tag, index) => (
+                        <ListItem key={index}>
+                            <NoEffect>
                                 <ListElements>{tag.tagName}</ListElements>
-                                </NoEffect>
-                                <SmallButton onClick={() => handleRemoveTag(index)}>Remove</SmallButton>
-                            </ListItem>
-                        ))}
-                    </ListContainer>
-                </div>
+                            </NoEffect>
+                            <SmallButton onClick={() => handleRemoveTag(index)}>Remove</SmallButton>
+                        </ListItem>
+                    ))}
+                </ListContainer>
+            </div>
 
             <Button onClick={handleSubmit}>Save Cocktail</Button>
         </ScrollingContainer>
@@ -241,4 +211,3 @@ function AddCocktailForm() {
 }
 
 export default AddCocktailForm;
-

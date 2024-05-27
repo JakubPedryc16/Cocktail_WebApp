@@ -1,17 +1,18 @@
+
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import SearchBar from '../components/Basic/SearchBar';
 import Cocktail from '../components/Complex/Cocktail';
 import Navbar from "../components/Complex/Navbar";
 import Ingredient from '../components/Complex/Ingredient';
+import { fetchDataWithToken } from '../utils/ApiUtils';
 import {
     CardsSection,
-    CocktailsPageContainer, CardTitle, MultipleCardsContainer
+    CardTitle,
+    CocktailsPageContainer,
+    MultipleCardsContainer
 } from "../components/StyledComponents/RegularComponents";
 
-
-
-function SearchPage(){
+function SearchPage() {
     const [cocktails, setCocktails] = useState([]);
     const [ingredients, setIngredients] = useState([]);
 
@@ -20,49 +21,21 @@ function SearchPage(){
 
     useEffect(() => {
         const fetchCocktails = async () => {
-            try {
-                const token = localStorage.getItem('token');
-                if (!token) {
-                    console.error('Unauthorised');
-                    return;
-                }
-
-                const response = await axios.get('http://localhost:8080/users/cocktails', {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-
-                if (Array.isArray(response.data)) {
-                    setCocktails(response.data);
-                    setFilteredCocktails(response.data);
-                } else {
-                    console.error('Cocktails data is not an array:', response.data);
-                }
-            } catch (error) {
-                console.error('Error fetching cocktails:', error);
+            const data = await fetchDataWithToken('http://localhost:8080/users/cocktails');
+            if (Array.isArray(data)) {
+                setCocktails(data);
+                setFilteredCocktails(data);
+            } else {
+                console.error('Cocktails data is not an array:', data);
             }
         };
-        fetchCocktails()
-            .then(() => {})
+        fetchCocktails();
     }, []);
 
     const fetchIngredients = async (cocktailId) => {
-        try {
-            const token = localStorage.getItem('token');
-            if (!token) {
-                console.error('Unauthorised');
-                return;
-            }
-
-            const response = await axios.get(`http://localhost:8080/users/ingredients/${cocktailId}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-            setIngredients(response.data);
-        } catch (error) {
-            console.error('Error fetching ingredients:', error);
+        const data = await fetchDataWithToken(`http://localhost:8080/users/ingredients/${cocktailId}`);
+        if (data) {
+            setIngredients(data);
         }
     };
 
@@ -95,7 +68,7 @@ function SearchPage(){
                                 key={cocktail.id}
                                 imageSrc={cocktail.cocktailImage}
                                 text={cocktail.cocktailName}
-                                tags={cocktail.tags} // Pass the tags here
+                                tags={cocktail.tags}
                                 onClick={() => handleCocktailClick(cocktail)}
                             />
                         ))}

@@ -8,6 +8,7 @@ import {
     MultipleCardsContainer
 } from "../components/StyledComponents/RegularComponents";
 import {DeleteButton} from "../components/StyledComponents/SpecialComponents";
+import {deleteDataWithToken, fetchDataWithToken} from "../utils/ApiUtils";
 
 
 function DeleteCocktailPage() {
@@ -15,26 +16,6 @@ function DeleteCocktailPage() {
     const [ingredients, setIngredients] = useState([]);
     const [selectedCocktail, setSelectedCocktail] = useState(null);
 
-    const fetchDataWithToken = async (url) => {
-        try {
-            const token = localStorage.getItem('token');
-            if (!token) {
-                console.error('Unauthorised!');
-                return null;
-            }
-
-            const response = await axios.get(url, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-
-            return response.data;
-        } catch (e) {
-            console.error('Error', e);
-            return null;
-        }
-    };
 
     useEffect(() => {
         const fetchCocktails = async () => {
@@ -78,17 +59,8 @@ function DeleteCocktailPage() {
             if (!isConfirmed) return;
 
             try {
-                const token = localStorage.getItem('token');
-                if (!token) {
-                    console.error('Unauthorised!');
-                    return;
-                }
 
-                const response = await axios.delete(`http://localhost:8080/users/cocktails/${selectedCocktail.id}`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
+                const response = await deleteDataWithToken(`http://localhost:8080/users/cocktails/${selectedCocktail.id}`)
 
                 if (response.status === 200) {
                     setCocktails(cocktails.filter(cocktail => cocktail.id !== selectedCocktail.id));
