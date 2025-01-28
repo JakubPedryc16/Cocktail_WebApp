@@ -25,7 +25,8 @@ Cocktailoo Beta is a prototype application designed to simplify the discovery an
 ### Add Cocktail Page  
 
 ![image](https://github.com/user-attachments/assets/6b06f675-e3db-4118-99af-6a597cfaf061)
-![image](https://github.com/user-attachments/assets/8d404828-368a-4000-9165-746994997cbd)
+![image](https://github.com/user-attachments/assets/002661dc-9d37-4be4-a894-44baad748be3)
+
 
 
 ### Remove Cocktail Page  
