@@ -1,6 +1,6 @@
 # Cocktailoo Beta  
 
-Cocktailoo Beta is a prototype application designed to simplify the discovery and management of cocktails for enthusiasts. While limited in functionality compared to the envisioned full version, the prototype focuses on essential features to enhance the user experience.  
+Cocktailoo Beta is a prototype application designed to simplify the discovery and management of cocktails for enthusiasts. While limited in functionality compared to the envisioned full version, it lays the groundwork for future iterations with more advanced features.  
 
 ## Key Features  
 - **Search Functionality**:  
@@ -8,9 +8,6 @@ Cocktailoo Beta is a prototype application designed to simplify the discovery an
 
 - **Add and Remove Cocktails**:  
   Add new cocktail entries or remove existing ones to maintain a flexible cocktail database.  
-
-## About  
-Cocktailoo Beta serves as a foundation for exploring the potential of a cocktail-focused platform. It lays the groundwork for future iterations with more advanced features and community-driven enhancements.
 
 ---
 
