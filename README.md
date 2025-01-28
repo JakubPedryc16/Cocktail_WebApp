@@ -14,25 +14,21 @@ Cocktailoo Beta is a prototype application designed to simplify the discovery an
 ## Screenshots  
 
 ### Home Page  
-![image](https://github.com/user-attachments/assets/747a928b-8677-4f5f-925f-cf6133d27d00)
+![image](https://github.com/user-attachments/assets/a03c347e-e602-4899-ad7b-24ca52719477)
 
 
 ### Search Page  
 
-![image](https://github.com/user-attachments/assets/1ba94ed6-1506-4e9b-9981-209b255174be)
+![image](https://github.com/user-attachments/assets/f155a0cf-4ff7-4b7a-b54a-7362ce6c1d5e)
 
 
 ### Add Cocktail Page  
 
-![image](https://github.com/user-attachments/assets/074596df-66b9-4286-9665-90d559d98e17)
-![image](https://github.com/user-attachments/assets/5383fba6-9cfc-4576-ba71-da1b4fec7de2)
+![image](https://github.com/user-attachments/assets/6b06f675-e3db-4118-99af-6a597cfaf061)
+![image](https://github.com/user-attachments/assets/8d404828-368a-4000-9165-746994997cbd)
+
 
 ### Remove Cocktail Page  
 
-![image](https://github.com/user-attachments/assets/04c9e96c-c932-49d0-97ec-ce15e2f81dd9)
-
-### Profile Page  
-
-![image](https://github.com/user-attachments/assets/b53a972a-46e3-4585-ac95-bf08822032c4)
-
+![image](https://github.com/user-attachments/assets/73a9a591-c15e-45fc-9994-4301088a3365)
 
